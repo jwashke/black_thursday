@@ -4,7 +4,7 @@ class Merchant
   end
 
   def id
-    @info[:id]
+    @info[:id].to_i
   end
 
   def name
