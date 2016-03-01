@@ -1,4 +1,3 @@
-require 'pry'
 require_relative 'test_helper'
 require_relative '../lib/merchant_repository'
 require 'minitest/autorun'
@@ -9,7 +8,6 @@ class MerchantRepositoryTest < Minitest::Test
 		@merchant_repository = MerchantRepository.new
 		@merchants_array = @test_helper.array_of_merchants
 		@merchant_repository.merchants = @merchants_array
-		#binding.pry
 	end
 
   def test_it_can_be_instantiated
