@@ -19,7 +19,7 @@ class MerchantRepositoryTest < Minitest::Test
 	end
 
 	def test_it_can_find_merchant_by_id
-    assert_equal @merchants_array[0], @merchant_repository.find_by_id("11111111")
+    assert_equal @merchants_array[0], @merchant_repository.find_by_id(11111111)
 	end
 
 	def test_it_can_find_merchant_by_name
