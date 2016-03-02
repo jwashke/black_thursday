@@ -1,6 +1,9 @@
 class ItemRepository
-  def initialize
-    @items = []
+
+  attr_accessor :items
+
+  def initialize(items)
+    @items = items
   end
 
   def all
