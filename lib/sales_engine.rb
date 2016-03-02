@@ -21,14 +21,14 @@ class SalesEngine
     MerchantRepository.new(array.map { |merchant| Merchant.new(merchant) })
   end
 
-   def self.convert_data_array_to_hash(data_array)
-    [[:items, data_array[0]], [:merchants, data_array[1]]].to_h
-  end
-
   def self.from_csv(hash)
     data_array = hash.map { |key, path| DataLoader.from_CSV(path) }
     hash = convert_data_array_to_hash(data_array)
     SalesEngine.new(hash)
+  end
+
+  def self.convert_data_array_to_hash(data_array)
+    [[:items, data_array[0]], [:merchants, data_array[1]]].to_h
   end
 end
 
