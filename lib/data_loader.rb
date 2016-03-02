@@ -7,6 +7,6 @@ class DataLoader
   end
 
   def self.parse_data_to_hash(contents)
-    contents.map { |row| row.to_h }
+    contents.map { |row| row.to_h }  
   end
 end

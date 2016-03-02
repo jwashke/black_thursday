@@ -5,9 +5,8 @@ require 'minitest/autorun'
 class ItemRepositoryTest < MiniTest::Test
   def setup
     @test_helper = TestHelper.new
-    @item_repository = ItemRepository.new
     @items_array = @test_helper.array_of_items
-    @item_repository.items = @items_array
+    @item_repository = ItemRepository.new(@items_array)
   end
 
   def test_it_can_be_instantiated
@@ -47,7 +46,7 @@ class ItemRepositoryTest < MiniTest::Test
 	end
 
 	def test_it_returns_empty_array_when_no_item
-		repo = ItemRepository.new
+		repo = ItemRepository.new([])
 		assert_equal [], repo.all
 	end
 

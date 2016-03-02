@@ -1,5 +1,6 @@
 require 'minitest/autorun'
 require_relative 'test_helper'
+require_relative '../lib/data_loader'
 
 
 class DataLoaderTest < Minitest::Test

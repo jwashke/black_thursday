@@ -5,9 +5,8 @@ require 'minitest/autorun'
 class MerchantRepositoryTest < Minitest::Test
 	def setup
 		@test_helper = TestHelper.new
-		@merchant_repository = MerchantRepository.new
 		@merchants_array = @test_helper.array_of_merchants
-		@merchant_repository.merchants = @merchants_array
+		@merchant_repository = MerchantRepository.new(@merchants_array)
 	end
 
   def test_it_can_be_instantiated
@@ -32,7 +31,7 @@ class MerchantRepositoryTest < Minitest::Test
 	end
 
 	def test_it_returns_empty_array_when_no_merchant
-		repo = MerchantRepository.new
+		repo = MerchantRepository.new([])	
 		assert_equal [], repo.all
 	end
 

@@ -1,7 +1,5 @@
 class MerchantRepository
 
-  attr_accessor :merchants
-
   def initialize(merchants)
     @merchants = merchants
   end

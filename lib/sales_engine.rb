@@ -3,7 +3,7 @@ require_relative 'merchant_repository'
 require_relative 'item'
 require_relative 'merchant'
 require_relative 'data_loader'
-require 'pry'
+
 class SalesEngine
   attr_reader :items,
               :merchants
@@ -13,11 +13,11 @@ class SalesEngine
     @merchants = merchant_method_name_needed(hash[:merchants])
   end
 
-  def item_method_name_needed(array)
+  def populate_item_repository(array)
     ItemRepository.new(array.map { |item| Item.new(item) })
   end
 
-  def merchant_method_name_needed(array)
+  def populate_merchant_repository(array)
     MerchantRepository.new(array.map { |merchant| Merchant.new(merchant)})
   end
 
