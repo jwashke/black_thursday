@@ -9,8 +9,8 @@ class SalesEngine
               :merchants
 
   def initialize(hash)
-    @items = item_method_name_needed(hash[:items])
-    @merchants = merchant_method_name_needed(hash[:merchants])
+    @items = populate_item_repository(hash[:items])
+    @merchants = populate_merchant_repository(hash[:merchants])
   end
 
   def populate_item_repository(array)
@@ -18,13 +18,16 @@ class SalesEngine
   end
 
   def populate_merchant_repository(array)
-    MerchantRepository.new(array.map { |merchant| Merchant.new(merchant)})
+    MerchantRepository.new(array.map { |merchant| Merchant.new(merchant) })
+  end
+
+   def self.convert_data_array_to_hash(data_array)
+    [[:items, data_array[0]], [:merchants, data_array[1]]].to_h
   end
 
   def self.from_csv(hash)
-    data_array = hash.each do |key, path|
-      hash[key] = DataLoader.from_CSV(path)
-    end
+    data_array = hash.map { |key, path| DataLoader.from_CSV(path) }
+    hash = convert_data_array_to_hash(data_array)
     SalesEngine.new(hash)
   end
 end
@@ -37,4 +40,4 @@ se = SalesEngine.from_csv({
 
 ir = se.items
 item = ir.find_by_name("510+ RealPush Icon Set")
-puts se.merchants
+puts se
