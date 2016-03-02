@@ -1,6 +1,7 @@
 class MerchantRepository
-  def initialize
-    @merchants = []
+
+  def initialize(merchants)
+    @merchants = merchants
   end
 
   def all
