@@ -17,7 +17,7 @@ class ItemRepository
   end
 
   def find_all_by_description(text)
-    @items.select { |item| item.description.include?(text) }
+    @items.select { |item| item.description.downcase.include?(text.downcase) }
   end
 
   def find_all_by_price(price)
