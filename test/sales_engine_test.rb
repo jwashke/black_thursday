@@ -56,4 +56,17 @@ class SalesEngineTest < Minitest::Test
   def test_it_populates_merchant_repository_with_a_merchant_name
      assert_equal @test_helper.sample_merchant_object[0].name, @sales_engine.populate_merchant_repository(@test_helper.sample_merchant_hash_info).merchants[0].name
   end
+
+  def test_it_connects_items_to_merchant
+    @sales_engine.populate_item_repository(@test_helper.sample_item_hash_info)
+    @sales_engine.populate_merchant_repository(@test_helper.sample_merchant_hash_info)
+    @sales_engine.connect_items_to_merchant
+    assert @sales_engine.merchants.items.instance_of?(Item)
+
+  end
+
+end
+
+class SalesEngine
+  attr_accessor :items, :merchants
 end
