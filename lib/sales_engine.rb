@@ -5,12 +5,12 @@ require_relative 'merchant'
 require_relative 'data_loader'
 
 class SalesEngine
-  attr_reader :items,
-              :merchants
+  attr_reader :item_repository,
+              :merchant_repository
 
   def initialize(hash)
-    @items = populate_item_repository(hash[:items])
-    @merchants = populate_merchant_repository(hash[:merchants])
+    @item_repository = populate_item_repository(hash[:items])
+    @merchant_repository = populate_merchant_repository(hash[:merchants])
     connect_items_to_merchant
     connect_merchant_to_item
   end
@@ -34,14 +34,14 @@ class SalesEngine
   end
 
   def connect_items_to_merchant
-    @merchants.all.each do |merchant|
-      merchant.items = @items.find_all_by_merchant_id(merchant.id)
+    @merchant_repository.all.each do |merchant|
+      merchant.items = @item_repository.find_all_by_merchant_id(merchant.id)
     end
   end
 
   def connect_merchant_to_item
-    @items.all.each do |item|
-      item.merchant = @merchants.find_by_id(item.merchant_id)
+    @item_repository.all.each do |item|
+      item.merchant = @merchant_repository.find_by_id(item.merchant_id)
     end
   end
 end

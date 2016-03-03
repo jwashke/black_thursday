@@ -39,9 +39,4 @@ class SalesAnalystTest < Minitest::Test
     number_of_items = @sales_analyst.golden_items
     assert_equal 1, number_of_items.length
   end
-
-
-
-
-
 end

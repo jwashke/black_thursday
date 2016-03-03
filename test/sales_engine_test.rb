@@ -13,11 +13,11 @@ class SalesEngineTest < Minitest::Test
   end
 
   def test_it_has_a_item_repository
-    assert @sales_engine.items.instance_of?(ItemRepository)
+    assert @sales_engine.item_repository.instance_of?(ItemRepository)
   end
 
   def test_it_has_a_merchant_repository
-    assert @sales_engine.merchants.instance_of?(MerchantRepository)
+    assert @sales_engine.merchant_repository.instance_of?(MerchantRepository)
   end
 
   def test_it_populates_item_repository_with_an_item_object
