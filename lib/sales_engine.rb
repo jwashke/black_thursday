@@ -30,6 +30,12 @@ class SalesEngine
   def self.convert_data_array_to_hash(data_array)
     [[:items, data_array[0]], [:merchants, data_array[1]]].to_h
   end
+
+  def connect_items_to_merchant
+    @merchants.all.each do |merchant|
+      merchant.items = @items.find_all_by_merchant_id(merchant.id)
+    end
+  end
 end
 
 se = SalesEngine.from_csv({
