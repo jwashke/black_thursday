@@ -47,6 +47,30 @@ class TestHelper
 		  :updated_at  => @time })]
 	end
 
+	def array_of_invoices
+		[Invoice.new({
+			:id => "1",
+      :customer_id => "2",
+      :merchant_id => "12345678",
+      :status      => "shipped",
+      :created_at  => @time,
+      :updated_at  => @time}),
+		Invoice.new({
+			:id => "2",
+	    :customer_id => "3",
+	    :merchant_id => "12345679",
+	    :status      => "pending",
+	    :created_at  => @time,
+	    :updated_at  => @time}),
+		Invoice.new({
+			:id => "3",
+	    :customer_id => "4",
+	    :merchant_id => "12345678",
+	    :status      => "returned",
+	    :created_at  => @time,
+	    :updated_at  => @time})]
+	end
+
 	def sample_item_hash_info
 		[{
       :id          => "263395237",
