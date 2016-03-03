@@ -5,11 +5,11 @@ require_relative '../lib/sales_analyst'
 
 
 class SalesAnalystTest < Minitest::Test
-  # def setup
-  #   @sales_engine = SalesEngine.new({ :merchants => [], :items => [] })
-  #   @sales_analyst = SalesAnalyst.new(sales_engine)
-  # end
-  #
+  def setup
+    @sales_engine = SalesEngine.new({ :merchants => [], :items => [] })
+    @sales_analyst = SalesAnalyst.new(sales_engine)
+  end
+
   # def test_it_can_be_instantiated
   #   skip
   #   assert @sales_analyst.instance_of?(SalesAnalyst)
