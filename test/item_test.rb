@@ -10,10 +10,10 @@ class ItemTest < Minitest::Test
       :id          => "263395237",
       :name        => "Pencil",
       :description => "You can use it to write things",
-      :unit_price  => BigDecimal.new(10.99,4),
+      :unit_price  => "1099",
       :merchant_id => "12334141",
-      :created_at  => @time,
-      :updated_at  => @time
+      :created_at  => @time.to_s,
+      :updated_at  => @time.to_s
       })
   end
 
@@ -42,10 +42,10 @@ class ItemTest < Minitest::Test
   end
 
   def test_it_returns_the_time_created_at
-    assert_equal @time, @item.created_at
+    assert_equal @time.to_s, @item.created_at.to_s
   end
 
   def test_it_returns_the_time_last_updated
-    assert_equal @time, @item.updated_at
+    assert_equal @time.to_s, @item.updated_at.to_s
   end
 end

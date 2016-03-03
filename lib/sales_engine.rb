@@ -11,6 +11,8 @@ class SalesEngine
   def initialize(hash)
     @items = populate_item_repository(hash[:items])
     @merchants = populate_merchant_repository(hash[:merchants])
+    connect_items_to_merchant
+    connect_merchant_to_item
   end
 
   def populate_item_repository(array)
@@ -34,6 +36,12 @@ class SalesEngine
   def connect_items_to_merchant
     @merchants.all.each do |merchant|
       merchant.items = @items.find_all_by_merchant_id(merchant.id)
+    end
+  end
+
+  def connect_merchant_to_item
+    @items.all.each do |item|
+      item.merchant = @merchants.find_by_id(item.merchant_id)
     end
   end
 end

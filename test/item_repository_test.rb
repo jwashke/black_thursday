@@ -27,12 +27,12 @@ class ItemRepositoryTest < MiniTest::Test
 
   def test_it_can_find_all_by_description
     items = [@items_array[0], @items_array[2]]
-    assert_equal items, @item_repository.find_all_by_description("Delicious")
+    assert_equal items, @item_repository.find_all_with_description("Delicious")
   end
 
   def test_find_all_by_description_is_case_insensitive
     items = [@items_array[0], @items_array[2]]
-    assert_equal items, @item_repository.find_all_by_description("DeLiCIOUS")
+    assert_equal items, @item_repository.find_all_with_description("DeLiCIOUS")
   end
 
   def test_it_can_find_all_by_price
@@ -64,7 +64,7 @@ class ItemRepositoryTest < MiniTest::Test
 	end
 
 	def test_it_returns_an_empty_array_when_find_all_by_description_finds_nothing
-		assert_equal [], @item_repository.find_all_by_description("Unsavory")
+		assert_equal [], @item_repository.find_all_with_description("Unsavory")
 	end
 
   def test_it_returns_an_empty_array_when_find_all_by_price_finds_nothing

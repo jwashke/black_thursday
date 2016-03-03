@@ -1,4 +1,6 @@
 class Merchant
+  attr_accessor :items
+
   def initialize(info_hash)
     @info = info_hash
   end

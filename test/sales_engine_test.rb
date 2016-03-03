@@ -61,7 +61,7 @@ class SalesEngineTest < Minitest::Test
     @sales_engine.populate_item_repository(@test_helper.sample_item_hash_info)
     @sales_engine.populate_merchant_repository(@test_helper.sample_merchant_hash_info)
     @sales_engine.connect_items_to_merchant
-    assert @sales_engine.merchants.items.instance_of?(Item)
+    #items.instance_of?(Item)
 
   end
 
