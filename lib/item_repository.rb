@@ -16,7 +16,7 @@ class ItemRepository
     @items.find { |item| item.name == name }
   end
 
-  def find_all_by_description(text)
+  def find_all_with_description(text)
     @items.select { |item| item.description.downcase.include?(text.downcase) }
   end
 
@@ -31,4 +31,9 @@ class ItemRepository
   def find_all_by_merchant_id(merchant_id)
     @items.select { |item| item.merchant_id == merchant_id }
   end
+
+  def inspect
+    "#<#{self.class} #{@items.size} rows>"
+  end
 end
+
