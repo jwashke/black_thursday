@@ -1,4 +1,4 @@
-git require_relative 'sales_engine'
+require_relative 'sales_engine'
 
 class SalesAnalyst
   attr_reader :sales_engine
@@ -30,16 +30,16 @@ class SalesAnalyst
     end
   end
 
-  # def average_item_price_for_merchant(merchant_id)
-  #   merchant = sales_engine.merchants.find_by_id(merchant_id)
-  #   grand_total = total_price(merchant.items)
-  #   BigDecimal.new("#{grand_total / merchant.items.length).round(2)}")
-  # end
+  def average_item_price_for_merchant(merchant_id)
+    merchant = sales_engine.merchants.find_by_id(merchant_id)
+    grand_total = total_price(merchant.items)
+    BigDecimal.new((grand_total / merchant.items.length).round(2))
+  end
 
   def total_price(items)
     items.reduce(0) do |sum_items, item|
       sum_items + item.unit_price
-    # end
+    end
   end
 
   def average_average_price_per_merchant
@@ -74,16 +74,16 @@ class SalesAnalyst
 
 end
 
-sales_engine = SalesEngine.from_csv({
-    :items     => "./data/items.csv",
-    :merchants => "./data/merchants.csv"
-  })
+# sales_engine = SalesEngine.from_csv({
+#     :items     => "./data/items.csv",
+#     :merchants => "./data/merchants.csv"
+#   })
 
-sa = SalesAnalyst.new(sales_engine)
- puts sa.average_items_per_merchant_standard_deviation
+# sa = SalesAnalyst.new(sales_engine)
+#  puts sa.average_items_per_merchant_standard_deviation
 
 
-puts sa.merchants_with_high_item_count
-puts sa.average_item_price_for_merchant(4)
-puts sa.average_average_price_per_merchant
-puts sa.golden_items
+# puts sa.merchants_with_high_item_count
+# puts sa.average_item_price_for_merchant(4)
+# puts sa.average_average_price_per_merchant
+# puts sa.golden_items
