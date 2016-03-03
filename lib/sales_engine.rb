@@ -38,6 +38,6 @@ se = SalesEngine.from_csv({
   })
 
 
-ir = se.items
-item = ir.find_by_name("510+ RealPush Icon Set")
-puts se
+# ir = se.items
+# item = ir.find_by_name("510+ RealPush Icon Set")
+# puts se

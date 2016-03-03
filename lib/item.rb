@@ -1,3 +1,6 @@
+require 'bigdecimal'
+require 'bigdecimal/util'
+
 class Item
   def initialize(info_hash)
     @info = info_hash
@@ -16,7 +19,7 @@ class Item
   end
 
   def unit_price
-    @info[:unit_price]
+    @info[:unit_price].to_d / 100
   end
 
   def merchant_id
@@ -24,10 +27,10 @@ class Item
   end
 
   def created_at
-    @info[:created_at]
+    Time.parse(@info[:created_at])
   end
 
   def updated_at
-    @info[:updated_at]
+    Time.parse(@info[:updated_at])
   end
 end
