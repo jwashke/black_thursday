@@ -1,16 +1,20 @@
 require_relative 'item_repository'
 require_relative 'merchant_repository'
+require_relative 'invoice_repository'
 require_relative 'item'
 require_relative 'merchant'
+require_relative 'invoice'
 require_relative 'data_loader'
 
 class SalesEngine
   attr_reader :item_repository,
-              :merchant_repository
+              :merchant_repository,
+              :invoice_repository
 
   def initialize(hash)
-    @item_repository = populate_item_repository(hash[:items])
+    @item_repository     = populate_item_repository(hash[:items])
     @merchant_repository = populate_merchant_repository(hash[:merchants])
+    @invoice_repository  = populate_invoice_repository(hash[:invoices])
     connect_items_to_merchant
     connect_merchant_to_item
   end
@@ -23,6 +27,10 @@ class SalesEngine
     MerchantRepository.new(array.map { |merchant| Merchant.new(merchant) })
   end
 
+  def populate_invoice_repository(array)
+    InvoiceRepository.new(array.map { |invoice| Invoice.new(invoice) })
+  end
+
   def self.from_csv(hash)
     data_array = hash.map { |key, path| DataLoader.from_CSV(path) }
     hash = convert_data_array_to_hash(data_array)
@@ -30,7 +38,7 @@ class SalesEngine
   end
 
   def self.convert_data_array_to_hash(data_array)
-    [[:items, data_array[0]], [:merchants, data_array[1]]].to_h
+    [[:items, data_array[0]], [:merchants, data_array[1]], [:invoices, data_array[2]]].to_h
   end
 
   def connect_items_to_merchant
@@ -44,12 +52,36 @@ class SalesEngine
       item.merchant = @merchant_repository.find_by_id(item.merchant_id)
     end
   end
+
+  def connect_invoices_to_merchants
+    @merchant_repository.all.each do |merchant|
+      merchant.invoices = @invoice_repository.find_all_by_merchant_id(merchant.id)
+    end
+  end
+
+  def connect_merchants_to_invoices
+    @invoice_repository.all.each do |invoice|
+      invoice.merchant = @merchant_repository.find_by_id(invoice.merchant_id)
+    end
+  end
+
+  def invoices
+    @invoice_repository
+  end
+
+  def merchants
+    @merchant_repository
+  end
+
+  def items
+    @item_repository
+  end
 end
 
-se = SalesEngine.from_csv({
-    :items     => "./data/items.csv",
-    :merchants => "./data/merchants.csv"
-  })
+# se = SalesEngine.from_csv({
+#     :items     => "./data/items.csv",
+#     :merchants => "./data/merchants.csv"
+#   })
 
 
 # ir = se.items

@@ -6,7 +6,9 @@ require_relative '../lib/sales_analyst'
 
 class SalesAnalystTest < Minitest::Test
   def setup
-    @sales_engine = SalesEngine.from_csv({ :items => "./test/test_data/items.csv", :merchants => "./test/test_data/merchants.csv" })
+    @sales_engine = SalesEngine.from_csv({ :items     => "./test/test_data/items.csv",
+                                           :merchants => "./test/test_data/merchants.csv",
+                                           :invoices  => "./test/test_data/invoices.csv" })
     @sales_analyst = SalesAnalyst.new(@sales_engine)
   end
 

@@ -5,7 +5,9 @@ require_relative '../lib/sales_engine'
 class SalesEngineTest < Minitest::Test
   def setup
     @test_helper = TestHelper.new
-    @sales_engine = SalesEngine.new({ :merchants => [], :items => [] })
+    @sales_engine = SalesEngine.new({ :merchants => [],
+                                      :items     => [],
+                                      :invoices  => [] })
   end
 
   def test_it_can_be_instantiated
@@ -18,6 +20,10 @@ class SalesEngineTest < Minitest::Test
 
   def test_it_has_a_merchant_repository
     assert @sales_engine.merchant_repository.instance_of?(MerchantRepository)
+  end
+
+  def test_it_has_an_invoice_repository
+    assert @sales_engine.invoice_repository.instance_of?(InvoiceRepository)
   end
 
   def test_it_populates_item_repository_with_an_item_object
@@ -65,8 +71,4 @@ class SalesEngineTest < Minitest::Test
 
   end
 
-end
-
-class SalesEngine
-  attr_accessor :items, :merchants
 end
