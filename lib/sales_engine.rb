@@ -5,7 +5,7 @@ require_relative 'item'
 require_relative 'merchant'
 require_relative 'invoice'
 require_relative 'data_loader'
-
+require 'pry'
 class SalesEngine
   attr_reader :item_repository,
               :merchant_repository,
@@ -17,6 +17,8 @@ class SalesEngine
     @invoice_repository  = populate_invoice_repository(hash[:invoices])
     connect_items_to_merchant
     connect_merchant_to_item
+    connect_invoices_to_merchants
+    connect_merchants_to_invoices
   end
 
   def populate_item_repository(array)
@@ -38,7 +40,7 @@ class SalesEngine
   end
 
   def self.convert_data_array_to_hash(data_array)
-    [[:items, data_array[0]], [:merchants, data_array[1]], [:invoices, data_array[2]]].to_h
+    [[:items, data_array[0]], [:merchants, data_array[1]], [:invoices, data_array[3]]].to_h
   end
 
   def connect_items_to_merchant
