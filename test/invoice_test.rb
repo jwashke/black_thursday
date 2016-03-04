@@ -8,7 +8,7 @@ class InvoiceTest < MiniTest::Test
     @invoice = Invoice.new({:id => "1",
                             :customer_id => "2",
                             :merchant_id => "12345678",
-                            :status      => "Shipped",
+                            :status      => "shipped",
                             :created_at  => "2012-03-27 14:54:09 UTC",
                             :updated_at  => "2012-03-28 14:54:09 UTC"})
   end
@@ -30,7 +30,7 @@ class InvoiceTest < MiniTest::Test
   end
 
   def test_it_returns_the_status
-    assert_equal "Shipped", @invoice.status
+    assert_equal :shipped, @invoice.status
   end
 
   def test_it_returns_a_time_instance_for_time_created

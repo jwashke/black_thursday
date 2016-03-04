@@ -72,6 +72,57 @@ class SalesAnalyst
     end
   end
 
+  def average_invoices_per_merchant
+    number_of_invoices = sales_engine.merchant_repository.all.reduce(0) do |sum, merchant|
+      sum + merchant.invoices.length
+    end
+    (number_of_invoices / sales_engine.merchant_repository.all.length.to_f).round(2)
+  end
+
+  def average_invoices_per_merchant_standard_deviation
+    average = average_invoices_per_merchant
+    variance = sales_engine.merchant_repository.all.reduce(0) do |sum, merchant|
+      sum += (merchant.invoices.length - average) ** 2
+    end
+    Math.sqrt(variance / (sales_engine.merchant_repository.all.length - 1)).round(2)
+  end
+
+  def top_merchants_by_invoice_count
+    average = average_invoices_per_merchant
+    standard_deviation = average_invoices_per_merchant_standard_deviation
+    sales_engine.merchant_repository.all.select do |merchant|
+      merchant.invoices.length > (average + 2 * standard_deviation)
+    end
+  end
+
+  def bottom_merchants_by_invoice_count
+    average = average_invoices_per_merchant
+    standard_deviation = average_invoices_per_merchant_standard_deviation
+    sales_engine.merchant_repository.all.select do |merchant|
+      merchant.invoices.length < (average - 2 * standard_deviation)
+    end
+  end
+
+  ####def top_days_by_invoice_count
+  #average invoices per day`
+  #average invoices per day standard deviation
+  #total invoices for each weekday
+  #average invoicies sold on each weekday
+  #which weekday has an average higher than one standard deviation above the average per day
+
+  def invoice_status(status)
+    total = sales_engine.invoices.all.count
+    status_total = sales_engine.invoices.find_all_by_status(status).count
+    amount = (status_total / total.to_f) * 100
+  end
+
+
+
+
+
+
+
+
 end
 
 # sales_engine = SalesEngine.from_csv({

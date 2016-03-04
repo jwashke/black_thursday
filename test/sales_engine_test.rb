@@ -7,6 +7,7 @@ class SalesEngineTest < Minitest::Test
     @test_helper = TestHelper.new
     @sales_engine = SalesEngine.new({ :merchants => [],
                                       :items     => [],
+                                      :customers => [],
                                       :invoices  => [] })
   end
 

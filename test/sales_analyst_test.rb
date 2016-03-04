@@ -8,6 +8,7 @@ class SalesAnalystTest < Minitest::Test
   def setup
     @sales_engine = SalesEngine.from_csv({ :items     => "./test/test_data/items.csv",
                                            :merchants => "./test/test_data/merchants.csv",
+                                           :customer  => "./test/test_data/merchants.csv",
                                            :invoices  => "./test/test_data/invoices.csv" })
     @sales_analyst = SalesAnalyst.new(@sales_engine)
   end
@@ -24,7 +25,7 @@ class SalesAnalystTest < Minitest::Test
     assert_equal 0.82, @sales_analyst.average_items_per_merchant
   end
 
-  def test_it_returns_standard_deviation_per_merchant
+  def test_it_returns_standard_deviation_for_items_per_merchant
     assert_equal 2.19, @sales_analyst.average_items_per_merchant_standard_deviation
   end
 
@@ -41,4 +42,27 @@ class SalesAnalystTest < Minitest::Test
     number_of_items = @sales_analyst.golden_items
     assert_equal 1, number_of_items.length
   end
+
+  def test_it_returns_average_invoices_per_merchant
+    assert_equal 0.19, @sales_analyst.average_invoices_per_merchant
+  end
+
+  def test_it_returns_standard_deviation_for_invoices_per_merchant
+    assert_equal 0.41, @sales_analyst.average_invoices_per_merchant_standard_deviation
+  end
+
+  def test_it_returns_merchants_more_than_two_standard_deviations_above_mean
+    assert_equal 1, @sales_analyst.top_merchants_by_invoice_count.length
+  end
+
+  def test_it_returns_merchants_less_than_two_standard_deviations_below_mean
+    assert_equal 0, @sales_analyst.bottom_merchants_by_invoice_count.length
+  end
+
+  def test_it_returns_the_percentage_of_invoices_with_a_given_status
+    assert_equal 63, @sales_analyst.invoice_status(:shipped).round(2)
+    assert_equal 29.0, @sales_analyst.invoice_status(:pending).round(2)
+    assert_equal 8.0, @sales_analyst.invoice_status(:returned).round(2)
+  end
+
 end

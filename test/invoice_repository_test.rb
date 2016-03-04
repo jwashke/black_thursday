@@ -31,9 +31,9 @@ class InvoiceRepositoryTest < Minitest::Test
   end
 
   def test_it_can_find_all_by_status
-    assert_equal [@invoices_array[1]], @invoice_repository.find_all_by_status("pending")
-    assert_equal [@invoices_array[0]], @invoice_repository.find_all_by_status("shipped")
-    assert_equal [@invoices_array[2]], @invoice_repository.find_all_by_status("returned")
+    assert_equal [@invoices_array[1]], @invoice_repository.find_all_by_status(:pending)
+    assert_equal [@invoices_array[0]], @invoice_repository.find_all_by_status(:shipped)
+    assert_equal [@invoices_array[2]], @invoice_repository.find_all_by_status(:returned)
   end
 
   def test_it_monkey_patched_inspect
