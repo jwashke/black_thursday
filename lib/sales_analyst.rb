@@ -103,17 +103,45 @@ class SalesAnalyst
     end
   end
 
-  ####def top_days_by_invoice_count
+  #def top_days_by_invoice_count
   #average invoices per day`
   #average invoices per day standard deviation
   #total invoices for each weekday
   #average invoicies sold on each weekday
   #which weekday has an average higher than one standard deviation above the average per day
 
+  def average_invoices_per_day
+    sales_engine.invoice_repository.all.count / 7.0
+  end
+
+  def total_invoices_per_day
+    days = Hash.new(0)
+    sales_engine.invoice_repository.all.map do |invoice|
+      days[invoice.created_at.strftime("%A")] += 1 # use %A instead of wday
+    end
+    days
+  end
+
+  def average_invoices_per_day_standard_deviation
+    average = average_invoices_per_day
+    variance = total_invoices_per_day.reduce(0) do |sum, day|
+      sum += (day[1] - average) ** 2
+    end
+    Math.sqrt(variance / (total_invoices_per_day.length - 1)).round(2)
+  end
+
+  def top_days_by_invoice_count
+    average = average_invoices_per_day
+    standard_deviation = average_invoices_per_day_standard_deviation
+    total_invoices_per_day.map do |day, value|
+      day if value > (average + standard_deviation)
+    end.compact # removes all nil from array
+  end
+
   def invoice_status(status)
     total = sales_engine.invoices.all.count
     status_total = sales_engine.invoices.find_all_by_status(status).count
-    amount = (status_total / total.to_f) * 100
+    amount = ((status_total / total.to_f) * 100).round(2)
   end
 
 

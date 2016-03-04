@@ -12,9 +12,11 @@ class TestHelper
 		[Merchant.new({
       :id   => "11111111",
       :name => "Virginia Hams" }),
+
      Merchant.new({
       :id   => "55555555",
       :name => "Turing School" }),
+
      Merchant.new({
       :id   => "33333333",
       :name => "Hams and things" })]
@@ -29,6 +31,7 @@ class TestHelper
       :merchant_id => "11111111",
       :created_at  => @time,
       :updated_at  => @time }),
+
 	  Item.new({
       :id          => "263395237",
       :name        => "Pencil",
@@ -37,6 +40,7 @@ class TestHelper
 	    :merchant_id => "55555555",
 	    :created_at  => @time,
 	    :updated_at  => @time }),
+
 		Item.new({
 		  :id          => "263395237",
 		  :name        => "Sugar Cured Ham",
@@ -55,6 +59,7 @@ class TestHelper
       :status      => "shipped",
       :created_at  => @time,
       :updated_at  => @time}),
+
 		Invoice.new({
 			:id => "2",
 	    :customer_id => "3",
@@ -62,6 +67,7 @@ class TestHelper
 	    :status      => "pending",
 	    :created_at  => @time,
 	    :updated_at  => @time}),
+
 		Invoice.new({
 			:id => "3",
 	    :customer_id => "4",
