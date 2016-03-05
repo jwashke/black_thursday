@@ -5,7 +5,12 @@ require_relative '../lib/sales_engine'
 class SalesEngineTest < Minitest::Test
   def setup
     @test_helper = TestHelper.new
-    @sales_engine = SalesEngine.new({ :merchants => [], :items => [] })
+    @sales_engine = SalesEngine.new({ :merchants     => [],
+                                      :items         => [],
+                                      :customers     => [],
+                                      :invoices      => [],
+                                      :invoice_items => [],
+                                      :transactions  => [] })
   end
 
   def test_it_can_be_instantiated
@@ -13,11 +18,19 @@ class SalesEngineTest < Minitest::Test
   end
 
   def test_it_has_a_item_repository
-    assert @sales_engine.items.instance_of?(ItemRepository)
+    assert @sales_engine.item_repository.instance_of?(ItemRepository)
   end
 
   def test_it_has_a_merchant_repository
-    assert @sales_engine.merchants.instance_of?(MerchantRepository)
+    assert @sales_engine.merchant_repository.instance_of?(MerchantRepository)
+  end
+
+  def test_it_has_an_invoice_repository
+    assert @sales_engine.invoice_repository.instance_of?(InvoiceRepository)
+  end
+
+  def test_it_has_an_invoice_item_repository
+    assert @sales_engine.invoice_items.instance_of?(InvoiceItemRepository)
   end
 
   def test_it_populates_item_repository_with_an_item_object
@@ -61,12 +74,8 @@ class SalesEngineTest < Minitest::Test
     @sales_engine.populate_item_repository(@test_helper.sample_item_hash_info)
     @sales_engine.populate_merchant_repository(@test_helper.sample_merchant_hash_info)
     @sales_engine.connect_items_to_merchant
-    assert @sales_engine.merchants.items.instance_of?(Item)
+    #items.instance_of?(Item)
 
   end
 
-end
-
-class SalesEngine
-  attr_accessor :items, :merchants
 end

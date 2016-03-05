@@ -1,8 +1,6 @@
-require 'bigdecimal'
-require 'bigdecimal/util'
-
-class Item
+class Invoice
   attr_accessor :merchant
+
   def initialize(info_hash)
     @info = info_hash
   end
@@ -11,20 +9,16 @@ class Item
     @info[:id].to_i
   end
 
-  def name
-    @info[:name]
-  end
-
-  def description
-    @info[:description]
-  end
-
-  def unit_price
-    @info[:unit_price].to_d / 100
+  def customer_id
+    @info[:customer_id].to_i
   end
 
   def merchant_id
     @info[:merchant_id].to_i
+  end
+
+  def status
+    @info[:status].to_sym
   end
 
   def created_at
