@@ -5,7 +5,7 @@ require_relative 'item'
 require_relative 'merchant'
 require_relative 'invoice'
 require_relative 'data_loader'
-require 'pry'
+
 class SalesEngine
   attr_reader :item_repository,
               :merchant_repository,
@@ -15,10 +15,17 @@ class SalesEngine
     @item_repository     = populate_item_repository(hash[:items])
     @merchant_repository = populate_merchant_repository(hash[:merchants])
     @invoice_repository  = populate_invoice_repository(hash[:invoices])
-    connect_items_to_merchant
-    connect_merchant_to_item
-    connect_invoices_to_merchants
-    connect_merchants_to_invoices
+    establish_relationships
+  end
+
+  def self.from_csv(hash)
+    data_array = hash.map { |key, path| DataLoader.from_CSV(path) }
+    hash = convert_data_array_to_hash(data_array)
+    SalesEngine.new(hash)
+  end
+
+  def self.convert_data_array_to_hash(data_array)
+    [[:items, data_array[0]], [:merchants, data_array[1]], [:invoices, data_array[3]]].to_h
   end
 
   def populate_item_repository(array)
@@ -33,14 +40,11 @@ class SalesEngine
     InvoiceRepository.new(array.map { |invoice| Invoice.new(invoice) })
   end
 
-  def self.from_csv(hash)
-    data_array = hash.map { |key, path| DataLoader.from_CSV(path) }
-    hash = convert_data_array_to_hash(data_array)
-    SalesEngine.new(hash)
-  end
-
-  def self.convert_data_array_to_hash(data_array)
-    [[:items, data_array[0]], [:merchants, data_array[1]], [:invoices, data_array[3]]].to_h
+  def establish_relationships
+    connect_items_to_merchant
+    connect_merchant_to_item
+    connect_invoices_to_merchants
+    connect_merchants_to_invoices
   end
 
   def connect_items_to_merchant

@@ -1,7 +1,10 @@
 require 'simplecov'
-SimpleCov.start
+SimpleCov.start do
+  add_filter "/test/"
+end
 require_relative '../lib/merchant'
 require_relative '../lib/item'
+require_relative '../lib/invoice_item'
 
 class TestHelper
 	def initialize
@@ -53,7 +56,7 @@ class TestHelper
 
 	def array_of_invoices
 		[Invoice.new({
-			:id => "1",
+			:id          => "1",
       :customer_id => "2",
       :merchant_id => "12345678",
       :status      => "shipped",
@@ -61,7 +64,7 @@ class TestHelper
       :updated_at  => @time}),
 
 		Invoice.new({
-			:id => "2",
+			:id          => "2",
 	    :customer_id => "3",
 	    :merchant_id => "12345679",
 	    :status      => "pending",
@@ -69,12 +72,41 @@ class TestHelper
 	    :updated_at  => @time}),
 
 		Invoice.new({
-			:id => "3",
+			:id          => "3",
 	    :customer_id => "4",
 	    :merchant_id => "12345678",
 	    :status      => "returned",
 	    :created_at  => @time,
 	    :updated_at  => @time})]
+	end
+
+  def array_of_invoice_items
+		[InvoiceItem.new({
+			:id          => "1",
+			:item_id     => "2",
+			:invoice_id  => "12345678",
+			:quantity    => "1",
+			:unit_price  => "1599",
+			:created_at  => @time,
+			:updated_at  => @time}),
+
+		InvoiceItem.new({
+			:id          => "2",
+			:item_id     => "2",
+			:invoice_id  => "4",
+			:quantity    => "1",
+			:unit_price  => "2099",
+			:created_at  => @time,
+			:updated_at  => @time}),
+
+		InvoiceItem.new({
+			:id          => "3",
+			:item_id     => "3",
+			:invoice_id  => "4",
+			:quantity    => "1",
+			:unit_price  => "599",
+			:created_at  => @time,
+			:updated_at  => @time})]
 	end
 
 	def sample_item_hash_info
@@ -89,7 +121,7 @@ class TestHelper
 	end
 
 	def sample_item_object
-		[Item.new({
+	  [Item.new({
       :id          => "263395237",
       :name        => "Country Ham",
       :description => "Delicious gift for grandpa",
@@ -97,18 +129,17 @@ class TestHelper
       :merchant_id => "11111111",
       :created_at  => @time,
       :updated_at  => @time })]
-		end
+  end
 
-		def sample_merchant_hash_info
-			[{
-	      :id   => "11111111",
-	      :name => "Virginia Hams" }]
-		end
+  def sample_merchant_hash_info
+	  [{
+	    :id   => "11111111",
+	    :name => "Virginia Hams" }]
+	end
 
-		def sample_merchant_object
-			[Merchant.new({
-	      :id   => "11111111",
-	      :name => "Virginia Hams" })]
-			end
-
+  def sample_merchant_object
+	  [Merchant.new({
+	    :id   => "11111111",
+	    :name => "Virginia Hams" })]
+	end
 end
