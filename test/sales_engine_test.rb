@@ -28,6 +28,10 @@ class SalesEngineTest < Minitest::Test
     assert @sales_engine.invoice_repository.instance_of?(InvoiceRepository)
   end
 
+  def test_it_has_an_invoice_item_repository
+    assert @sales_engine.invoice_items.instance_of?(InvoiceItemRepository)
+  end
+
   def test_it_populates_item_repository_with_an_item_object
     hash = @test_helper.sample_item_hash_info
     assert @sales_engine.populate_item_repository(hash).items[0].instance_of?(Item)
