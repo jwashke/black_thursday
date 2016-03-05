@@ -5,10 +5,11 @@ require_relative '../lib/sales_engine'
 class SalesEngineTest < Minitest::Test
   def setup
     @test_helper = TestHelper.new
-    @sales_engine = SalesEngine.new({ :merchants => [],
-                                      :items     => [],
-                                      :customers => [],
-                                      :invoices  => [] })
+    @sales_engine = SalesEngine.new({ :merchants     => [],
+                                      :items         => [],
+                                      :customers     => [],
+                                      :invoices      => [],
+                                      :invoice_items => [] })
   end
 
   def test_it_can_be_instantiated
