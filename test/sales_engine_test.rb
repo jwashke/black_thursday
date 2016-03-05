@@ -9,7 +9,8 @@ class SalesEngineTest < Minitest::Test
                                       :items         => [],
                                       :customers     => [],
                                       :invoices      => [],
-                                      :invoice_items => [] })
+                                      :invoice_items => [],
+                                      :transactions  => [] })
   end
 
   def test_it_can_be_instantiated

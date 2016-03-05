@@ -5,6 +5,7 @@ end
 require_relative '../lib/merchant'
 require_relative '../lib/item'
 require_relative '../lib/invoice_item'
+require_relative '../lib/transaction'
 
 class TestHelper
 	def initialize
@@ -108,6 +109,30 @@ class TestHelper
 			:created_at  => @time,
 			:updated_at  => @time})]
 	end
+
+  def array_of_transactions
+    [Transaction.new({ :id                          => "6",
+                       :invoice_id                  => "8",
+                       :credit_card_number          => "4242424242424242",
+                       :credit_card_expiration_date => "0220",
+                       :result                      => "success",
+                       :created_at                  => "2012-03-27 14:54:09 UTC",
+                       :updated_at                  => "2012-03-28 14:54:09 UTC" }),
+     Transaction.new({ :id                          => "7",
+                       :invoice_id                  => "8",
+                       :credit_card_number          => "4242424242424242",
+                       :credit_card_expiration_date => "0220",
+                       :result                      => "success",
+                       :created_at                  => "2012-03-27 14:54:09 UTC",
+                       :updated_at                  => "2012-03-28 14:54:09 UTC" }),
+     Transaction.new({ :id                          => "8",
+                       :invoice_id                  => "3",
+                       :credit_card_number          => "1111111111111111",
+                       :credit_card_expiration_date => "1121",
+                       :result                      => "failed",
+                       :created_at                  => "2012-03-27 14:54:09 UTC",
+                       :updated_at                  => "2012-03-28 14:54:09 UTC" })]
+  end
 
 	def sample_item_hash_info
 		[{
