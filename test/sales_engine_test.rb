@@ -87,9 +87,9 @@ class SalesEngineTest < Minitest::Test
     assert_equal 1, @se.invoices.all[25].transactions.count
   end
 
-  # def test_its_invoice_instances_are_connected_to_a_customer
-  #   assert @se.invoices.all[1].customer.instance_of?(Customer)
-  # end
+  def test_its_invoice_instances_are_connected_to_a_customer
+     assert @se.invoices.all[1].customer.instance_of?(Customer)
+  end
 
   def test_it_has_a_invoice_item_repository
     assert @se.invoice_items.instance_of?(InvoiceItemRepository)
@@ -103,9 +103,9 @@ class SalesEngineTest < Minitest::Test
     assert_equal 100, @se.invoice_items.all.count
   end
 
-  # def test_its_invoice_item_instances_are_connected_to_items
-  #   assert_equal 1, @se.invoice_items.all[0].items.count
-  # end
+  def test_its_invoice_item_instances_are_connected_to_items
+    assert @se.invoice_items.all[0].items.instance_of?(Item)
+  end
 
   def test_it_has_a_transactions_repository
     assert @se.transactions.instance_of?(TransactionRepository)
@@ -132,6 +132,6 @@ class SalesEngineTest < Minitest::Test
   end
 
   def test_its_customer_repository_loaded_all_customers
-    assert_equal 108, @se.customers.all.count
+    assert_equal 99, @se.customers.all.count
   end
 end
