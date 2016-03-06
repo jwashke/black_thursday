@@ -73,8 +73,6 @@ class SalesAnalyst
     (number_of_invoices / sales_engine.merchants.all.length.to_f).round(2)
   end
 
-
-
   def top_merchants_by_invoice_count
     average = average_invoices_per_merchant
     standard_deviation = average_invoices_per_merchant_standard_deviation

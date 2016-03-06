@@ -4,7 +4,7 @@ class Customer
   end
 
   def id
-    @info[:id]
+    @info[:id].to_i
   end
 
   def first_name
