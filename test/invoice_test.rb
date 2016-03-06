@@ -6,12 +6,13 @@ class InvoiceTest < MiniTest::Test
 
   def setup
     @test_helper = TestHelper.new
-    @invoice = Invoice.new({:id => "1",
-                            :customer_id => "2",
-                            :merchant_id => "12345678",
-                            :status      => "shipped",
-                            :created_at  => "2012-03-27 14:54:09 UTC",
-                            :updated_at  => "2012-03-28 14:54:09 UTC"})
+    @invoice = Invoice.new({
+      :id => "1",
+      :customer_id => "2",
+      :merchant_id => "12345678",
+      :status      => "shipped",
+      :created_at  => "2012-03-27 14:54:09 UTC",
+      :updated_at  => "2012-03-28 14:54:09 UTC"})
   end
 
   def test_it_can_be_instantiated

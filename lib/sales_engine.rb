@@ -87,7 +87,9 @@ class SalesEngine
     merchants.all.each do |merchant|
       merchant.invoices = invoices.find_all_by_merchant_id(merchant.id)
       merchant.items = items.find_all_by_merchant_id(merchant.id).uniq
-      merchant.customers = merchant.invoices.map { |invoice| customers.find_by_id(invoice.customer_id) }.uniq
+      merchant.customers = merchant.invoices.map do
+        |invoice| customers.find_by_id(invoice.customer_id)
+      end.uniq
     end
   end
 
