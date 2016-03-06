@@ -1,4 +1,4 @@
-require 'CSV'
+require 'csv'
 
 class DataLoader
   def self.from_CSV(filename)
