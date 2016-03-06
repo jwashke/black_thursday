@@ -2,7 +2,8 @@ class Invoice
   attr_accessor :merchant,
                 :items,
                 :customer,
-                :transactions
+                :transactions,
+                :invoice_items
 
   def initialize(info_hash)
     @info = info_hash
@@ -31,4 +32,17 @@ class Invoice
   def updated_at
     Time.parse(@info[:updated_at])
   end
+
+  def is_paid_in_full?
+    return if transactions.nil?
+    transactions.any? {|transaction| transaction.result == "success"}
+  end
+
+  def total
+  return 0 if invoice_items.nil?
+  return 0 unless is_paid_in_full?
+  invoice_items.reduce(0) do |sum, invoice_item|
+    sum + invoice_item.unit_price_to_dollars * invoice_item.quantity
+  end.to_d
+end
 end

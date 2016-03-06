@@ -71,24 +71,23 @@ class SalesEngine
   end
 
   def establish_relationships
-    connect_merchant_to_item
-    connect_invoices_and_items_and_customers_to_merchants
-    connect_merchants_to_invoices
-    connect_items_transactions_and_customers_to_invoice
-    connect_invoice_to_transaction
-  end
+   connect_merchant_to_item
+   connect_invoices_items_and_customers_to_merchants
+   connect_merchants_items_transactions_and_customers_to_invoice
+   connect_invoice_to_transaction
+ end
 
-  def connect_merchant_to_item
+ def connect_merchant_to_item
     items.all.each do |item|
       item.merchant = merchants.find_by_id(item.merchant_id)
     end
   end
 
-  def connect_invoices_and_items_and_customers_to_merchants
+  def connect_invoices_items_and_customers_to_merchants
     merchants.all.each do |merchant|
       merchant.invoices = invoices.find_all_by_merchant_id(merchant.id)
-      merchant.items = items.find_all_by_merchant_id(merchant.id)
-      #merchant.customers = merchant.invoices.map { |invoice| customers.find_by_id(invoice.customer_id) }
+      merchant.items = items.find_all_by_merchant_id(merchant.id).uniq
+      merchant.customers = merchant.invoices.map { |invoice| customers.find_by_id(invoice.customer_id) }.uniq
     end
   end
 
@@ -98,12 +97,19 @@ class SalesEngine
     end
   end
 
-  def connect_items_transactions_and_customers_to_invoice
+  def connect_items_to_invoice_items
+    invoice_items.all.each do |invoice_item|
+      invoice_item.items = items.find_by_id(invoice_item.item_id)
+    end
+  end
+
+  def connect_merchants_items_transactions_and_customers_to_invoice
+    connect_items_to_invoice_items
     invoices.all.each do |invoice|
       invoice.merchant = merchants.find_by_id(invoice.merchant_id)
-      invoice_items_array = invoice_items.find_all_by_invoice_id(invoice.id)
-      invoice.items = invoice_items_array.map { |invoice_item| items.find_by_id(invoice_item.item_id) }
-      invoice.transactions = transactions.find_all_by_invoice_id(invoice.id)
+      invoice.invoice_items = invoice_items.find_all_by_invoice_id(invoice.id).uniq
+      invoice.items = invoice.invoice_items.map { |invoice_item| invoice_item.items }
+      invoice.transactions = transactions.find_all_by_invoice_id(invoice.id).uniq
       invoice.customer = customers.find_by_id(invoice.customer_id)
     end
   end

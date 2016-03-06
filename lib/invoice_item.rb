@@ -2,7 +2,8 @@ require 'bigdecimal'
 require 'bigdecimal/util'
 
 class InvoiceItem
-  attr_accessor :merchant
+  attr_accessor :merchant,
+                :items
 
   def initialize(info_hash)
     @info = info_hash
