@@ -1,5 +1,5 @@
 language: ruby
-script: rake test
-# script: for file in test/*.rb; do bundle exec mrspec $file;  done
+before install:
 rvm:
- - 2.3.0
+  - 2.3.0
+script: bundle exec rake test
