@@ -111,6 +111,7 @@ class TestHelper
 	end
 
   def array_of_transactions
+
     [Transaction.new({ :id                          => "6",
                        :invoice_id                  => "8",
                        :credit_card_number          => "4242424242424242",
@@ -118,6 +119,7 @@ class TestHelper
                        :result                      => "success",
                        :created_at                  => "2012-03-27 14:54:09 UTC",
                        :updated_at                  => "2012-03-28 14:54:09 UTC" }),
+
      Transaction.new({ :id                          => "7",
                        :invoice_id                  => "8",
                        :credit_card_number          => "4242424242424242",
@@ -125,6 +127,7 @@ class TestHelper
                        :result                      => "success",
                        :created_at                  => "2012-03-27 14:54:09 UTC",
                        :updated_at                  => "2012-03-28 14:54:09 UTC" }),
+
      Transaction.new({ :id                          => "8",
                        :invoice_id                  => "3",
                        :credit_card_number          => "1111111111111111",
@@ -133,6 +136,31 @@ class TestHelper
                        :created_at                  => "2012-03-27 14:54:09 UTC",
                        :updated_at                  => "2012-03-28 14:54:09 UTC" })]
   end
+
+  def array_of_customers
+
+    [Customer.new({
+      :id          => "5",
+      :first_name  => "Sylvester",
+      :last_name   => "Nader",
+      :created_at  => @time,
+      :updated_at  => @time }),
+
+     Customer.new({
+      :id          => "3",
+      :first_name  => "Mariah",
+      :last_name   => "Toy",
+      :created_at  => @time,
+      :updated_at  => @time }),
+
+     Customer.new({
+      :id          => "4",
+      :first_name  => "Leanne",
+      :last_name   => "Braun",
+      :created_at  => @time,
+      :updated_at  => @time })]
+  end
+
 
 	def sample_item_hash_info
 		[{
