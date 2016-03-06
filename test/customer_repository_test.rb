@@ -45,6 +45,10 @@ class CustomerRepositoryTest < MiniTest::Test
   def test_it_returns_an_empty_array_when_find_all_by_last_name_finds_nothing
     assert_equal [], @customer_repository.find_all_by_last_name("Zombocom")
   end
+
+  def test_inspect_returns_the_class_and_number_of_rows
+    assert_equal "#<CustomerRepository 3 rows>", @customer_repository.inspect
+  end
 end
 
 class CustomerRepository

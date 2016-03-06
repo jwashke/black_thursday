@@ -39,10 +39,10 @@ class Invoice
   end
 
   def total
-  return 0 if invoice_items.nil?
-  return 0 unless is_paid_in_full?
-  invoice_items.reduce(0) do |sum, invoice_item|
-    sum + invoice_item.unit_price_to_dollars * invoice_item.quantity
-  end.to_d
-end
+    return 0 if invoice_items.nil?
+    return 0 unless is_paid_in_full?
+    invoice_items.reduce(0) do |sum, invoice_item|
+      sum + invoice_item.unit_price_to_dollars * invoice_item.quantity
+    end.to_d
+  end
 end

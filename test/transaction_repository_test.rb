@@ -56,4 +56,15 @@ class TransactionRepositoryTest < MiniTest::Test
   def test_it_returns_an_empty_error_when_result_not_found
     assert_equal [], @transaction_repo.find_all_by_result("pending")
   end
+
+  def test_inspect_returns_the_class_and_number_of_rows
+    assert_equal "#<TransactionRepository 3 rows>", @transaction_repo.inspect
+  end
+
+
+end
+
+
+def test_inspect_returns_the_class_and_number_of_rows
+  assert_equal "#<MerchantRepository 3 rows>", @merchant_repository.inspect
 end

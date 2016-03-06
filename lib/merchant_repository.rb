@@ -17,11 +17,12 @@ class MerchantRepository
   end
 
   def find_all_by_name(name)
-    @merchants.select { |merchant| merchant.name.downcase.include?(name.downcase) }
+    @merchants.select do |merchant|
+      merchant.name.downcase.include?(name.downcase)
+    end
   end
 
   def inspect
     "#<#{self.class} #{@merchants.size} rows>"
   end
 end
-

@@ -38,4 +38,10 @@ class InvoiceItemRepositoryTest < MiniTest::Test
   def test_it_returns_an_empty_array_when_no_invoice_id_is_found
     assert_equal [], @invoice_item_repo.find_all_by_invoice_id(7)
   end
+
+  def test_inspect_returns_the_class_and_number_of_rows
+    assert_equal "#<InvoiceItemRepository 3 rows>", @invoice_item_repo.inspect
+  end
+
+
 end
