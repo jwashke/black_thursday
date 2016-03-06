@@ -11,7 +11,6 @@ require_relative 'invoice_item'
 require_relative 'transaction'
 require_relative 'customer'
 require_relative 'data_loader'
-require 'pry'
 
 class SalesEngine
   attr_reader :items,
