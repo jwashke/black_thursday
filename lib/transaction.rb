@@ -1,4 +1,7 @@
 class Transaction
+
+  attr_accessor :invoice
+
   def initialize(info)
     @info = info
   end

@@ -1,5 +1,8 @@
 class Invoice
-  attr_accessor :merchant
+  attr_accessor :merchant,
+                :items,
+                :customer,
+                :transactions
 
   def initialize(info_hash)
     @info = info_hash

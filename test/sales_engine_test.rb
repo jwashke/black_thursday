@@ -18,15 +18,15 @@ class SalesEngineTest < Minitest::Test
   end
 
   def test_it_has_a_item_repository
-    assert @sales_engine.item_repository.instance_of?(ItemRepository)
+    assert @sales_engine.items.instance_of?(ItemRepository)
   end
 
   def test_it_has_a_merchant_repository
-    assert @sales_engine.merchant_repository.instance_of?(MerchantRepository)
+    assert @sales_engine.merchants.instance_of?(MerchantRepository)
   end
 
   def test_it_has_an_invoice_repository
-    assert @sales_engine.invoice_repository.instance_of?(InvoiceRepository)
+    assert @sales_engine.invoices.instance_of?(InvoiceRepository)
   end
 
   def test_it_has_an_invoice_item_repository
@@ -70,12 +70,12 @@ class SalesEngineTest < Minitest::Test
      assert_equal @test_helper.sample_merchant_object[0].name, @sales_engine.populate_merchant_repository(@test_helper.sample_merchant_hash_info).merchants[0].name
   end
 
-  def test_it_connects_items_to_merchant
-    @sales_engine.populate_item_repository(@test_helper.sample_item_hash_info)
-    @sales_engine.populate_merchant_repository(@test_helper.sample_merchant_hash_info)
-    @sales_engine.connect_items_to_merchant
-    #items.instance_of?(Item)
-
-  end
+    # def test_it_connects_items_to_merchant
+    #   @sales_engine.populate_item_repository(@test_helper.sample_item_hash_info)
+    #   @sales_engine.populate_merchant_repository(@test_helper.sample_merchant_hash_info)
+    #   @sales_engine.connect_items_to_merchant
+    #   #items.instance_of?(Item)
+    #
+    # end
 
 end
