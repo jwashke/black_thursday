@@ -6,7 +6,7 @@ class CustomerTest < Minitest::Test
   def setup
     @time = Time.now
     @customer = Customer.new({
-      :id         => 6,
+      :id         => "6",
       :first_name => "Joan",
       :last_name  => "Clarke",
       :created_at  => @time.to_s,
