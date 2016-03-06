@@ -88,25 +88,13 @@ class SalesEngine
     merchants.all.each do |merchant|
       merchant.invoices = invoices.find_all_by_merchant_id(merchant.id)
       merchant.items = items.find_all_by_merchant_id(merchant.id)
-      merchant.customers = merchant.invoices.map { |invoice| customers.find_by_id(invoice.customer_id) }
-    end
-  end
-
-  def connect_merchants_to_invoices
-    invoices.all.each do |invoice|
-      invoice.merchant = merchants.find_by_id(invoice.merchant_id)
+      #merchant.customers = merchant.invoices.map { |invoice| customers.find_by_id(invoice.customer_id) }
     end
   end
 
   def connect_invoice_to_transaction
     transactions.all.each do |transaction|
       transaction.invoice = invoices.find_by_id(transaction.invoice_id)
-    end
-  end
-
-  def connect_customer_to_invoice
-    invoices.all.each do |invoice|
-      invoice.customer = customers.find_by_id(invoice.customer_id)
     end
   end
 
