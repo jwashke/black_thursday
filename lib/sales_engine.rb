@@ -27,7 +27,7 @@ class SalesEngine
     @invoices      ||= populate_invoice_repository(hash[:invoices])
     @invoice_items ||= populate_invoice_item_repository(hash[:invoice_items])
     @transactions  ||= populate_transaction_repository(hash[:transactions])
-    @customers     ||= populate_customers_repository(hash[:customers])
+    @customers     ||= populate_customer_repository(hash[:customers])
     establish_relationships
   end
 
@@ -38,7 +38,6 @@ class SalesEngine
   end
 
   def self.convert_data_array_to_hash(data_array)
-    binding.pry
     [[:items, data_array[0]],
      [:merchants, data_array[1]],
      [:invoices, data_array[3]],
@@ -73,7 +72,7 @@ class SalesEngine
 
   def establish_relationships
     connect_merchant_to_item
-    connect_invoices_and_items_to_merchants
+    connect_invoices_and_items_and_customers_to_merchants
     connect_merchants_to_invoices
     connect_items_transactions_and_customers_to_invoice
     connect_invoice_to_transaction
@@ -85,10 +84,11 @@ class SalesEngine
     end
   end
 
-  def connect_invoices_and_items_to_merchants
+  def connect_invoices_and_items_and_customers_to_merchants
     merchants.all.each do |merchant|
       merchant.invoices = invoices.find_all_by_merchant_id(merchant.id)
       merchant.items = items.find_all_by_merchant_id(merchant.id)
+      merchant.customers = merchant.invoices.map { |invoice| customers.find_by_id(invoice.customer_id) }
     end
   end
 
@@ -104,13 +104,19 @@ class SalesEngine
     end
   end
 
+  def connect_customer_to_invoice
+    invoices.all.each do |invoice|
+      invoice.customer = customers.find_by_id(invoice.customer_id)
+    end
+  end
+
   def connect_items_transactions_and_customers_to_invoice
     invoices.all.each do |invoice|
       invoice.merchant = merchants.find_by_id(invoice.merchant_id)
       invoice_items_array = invoice_items.find_all_by_invoice_id(invoice.id)
       invoice.items = invoice_items_array.map { |invoice_item| items.find_by_id(invoice_item.item_id) }
       invoice.transactions = transactions.find_all_by_invoice_id(invoice.id)
-      #invoice.customers = customers.find_by_id(invoice.customer_id)
+      invoice.customer = customers.find_by_id(invoice.customer_id)
     end
   end
 end
