@@ -46,6 +46,10 @@ class MerchantRepositoryTest < Minitest::Test
 	def test_it_returns_an_empty_array_when_find_all_finds_nothing
 		assert_equal [], @merchant_repository.find_all_by_name("Ship")
 	end
+
+	def test_inspect_returns_the_class_and_number_of_rows
+		assert_equal "#<MerchantRepository 3 rows>", @merchant_repository.inspect
+	end
 end
 
 class MerchantRepository

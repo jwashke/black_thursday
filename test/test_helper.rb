@@ -195,4 +195,27 @@ class TestHelper
 	    :id   => "11111111",
 	    :name => "Virginia Hams" })]
 	end
+
+  def success_transaction
+    [Transaction.new({
+      :id                          => "8",
+      :invoice_id                  => "3",
+      :credit_card_number          => "1111111111111111",
+      :credit_card_expiration_date => "1121",
+      :result                      => "success",
+      :created_at                  => "2012-03-27 14:54:09 UTC",
+      :updated_at                  => "2012-03-28 14:54:09 UTC" })]
+  end
+
+  def failed_transaction
+    [Transaction.new({
+      :id                          => "8",
+      :invoice_id                  => "3",
+      :credit_card_number          => "1111111111111111",
+      :credit_card_expiration_date => "1121",
+      :result                      => "failed",
+      :created_at                  => "2012-03-27 14:54:09 UTC",
+      :updated_at                  => "2012-03-28 14:54:09 UTC" })]
+  end
+
 end

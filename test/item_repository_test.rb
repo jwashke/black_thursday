@@ -78,6 +78,10 @@ class ItemRepositoryTest < MiniTest::Test
   def test_it_returns_an_empty_array_when_find_all_by_merchant_id_finds_nothing
     assert_equal [], @item_repository.find_all_by_merchant_id(87654321)
   end
+
+  def test_inspect_returns_the_class_and_number_of_rows
+    assert_equal "#<ItemRepository 3 rows>", @item_repository.inspect
+  end
 end
 
 class ItemRepository
