@@ -2,6 +2,8 @@ require 'simplecov'
 SimpleCov.start do
   add_filter "/test/"
 end
+require "codeclimate-test-reporter"
+CodeClimate::TestReporter.start
 require_relative '../lib/merchant'
 require_relative '../lib/item'
 require_relative '../lib/invoice_item'
