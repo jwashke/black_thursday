@@ -7,13 +7,14 @@ require_relative '../lib/sales_analyst'
 
 class SalesAnalystTest < Minitest::Test
   def setup
-    se = SalesEngine.from_csv({ :items         => "./test/test_data/items.csv",
-                                :merchants     => "./test/test_data/merchants.csv",
-                                :customer      => "./test/test_data/merchants.csv",
-                                :invoices      => "./test/test_data/invoices.csv",
-                                :invoice_items => "./test/test_data/invoice_items.csv",
-                                :transactions  => "./test/test_data/transactions.csv",
-                                :customers     => "./test/test_data/customers.csv" })
+    se = SalesEngine.from_csv({
+      :items         => "./test/test_data/items.csv",
+      :merchants     => "./test/test_data/merchants.csv",
+      :customer      => "./test/test_data/merchants.csv",
+      :invoices      => "./test/test_data/invoices.csv",
+      :invoice_items => "./test/test_data/invoice_items.csv",
+      :transactions  => "./test/test_data/transactions.csv",
+      :customers     => "./test/test_data/customers.csv" })
     @sa = SalesAnalyst.new(se)
   end
 
@@ -78,6 +79,18 @@ class SalesAnalystTest < Minitest::Test
 
   def test_it_returns_top_days_by_invoice_count
     assert_equal ["Friday"], @sa.top_days_by_invoice_count
+  end
+
+  def test_it_returns_the_item_price_standard_deviation
+    assert_equal 8901.79, @sa.item_price_standard_deviation
+  end
+
+  def test_it_returns_average_invoices_per_merchant
+    assert_equal 0.19, @sa.average_invoices_per_merchant
+  end
+
+  def test_it_returns_the_total_revenue_by_date
+    assert_equal 0, @sa.total_revenue_by_date(Time.parse("2000-05-28")).to_f
   end
 
 end

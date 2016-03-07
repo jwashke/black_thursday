@@ -1,5 +1,6 @@
 require_relative 'sales_engine'
 
+
 class SalesAnalyst
   attr_reader :sales_engine
 
@@ -153,4 +154,28 @@ class SalesAnalyst
     status_total = sales_engine.invoices.find_all_by_status(status).count
     amount = ((status_total / total.to_f) * 100).round(2)
   end
+
+  def total_revenue_by_date(date)
+    get_invoices_for_date(date).reduce(0) { |sum, invoice| sum + invoice.total }
+  end
+
+  def get_invoices_for_date(date)
+    sales_engine.invoices.all.select do |invoice|
+      invoice.created_at == date
+    end
+  end
+
+  def top_revenue_earners(x = 20)
+    earners = sales_engine.merchants.all.map do |merchant|
+      revenue = merchant.invoices.map {|invoice| invoice.total }.reduce(:+)
+      { :merchant => merchant, :revenue => revenue}
+    end
+    earners.sort_by {|earner| earner[:revenue]}.reverse[0..(x - 1)].map { |hash| hash[:merchant] }
+  end
+
+  def merchants_with_pending_invoices
+    
+  end
+
+
 end

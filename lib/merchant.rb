@@ -14,4 +14,8 @@ class Merchant
   def name
     @info[:name]
   end
+
+  def inspect
+    "#<#{self.class}>"
+  end
 end

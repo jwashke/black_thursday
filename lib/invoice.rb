@@ -45,4 +45,8 @@ class Invoice
       sum + invoice_item.unit_price_to_dollars * invoice_item.quantity
     end.to_d
   end
+
+  def inspect
+    "#<#{self.class}>"
+  end
 end
