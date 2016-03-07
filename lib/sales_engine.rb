@@ -11,7 +11,6 @@ require_relative 'invoice_item'
 require_relative 'transaction'
 require_relative 'customer'
 require_relative 'data_loader'
-require 'pry'
 
 class SalesEngine
   attr_reader :items,
@@ -31,19 +30,10 @@ class SalesEngine
     establish_relationships
   end
 
-  def self.from_csv(hash)
-    data_array = hash.map { |key, path| DataLoader.from_CSV(path) }
-    hash = convert_data_array_to_hash(data_array)
-    SalesEngine.new(hash)
-  end
-
-  def self.convert_data_array_to_hash(data_array)
-    [[:items, data_array[0]],
-     [:merchants, data_array[1]],
-     [:invoices, data_array[3]],
-     [:invoice_items, data_array[4]],
-     [:transactions, data_array[5]],
-     [:customers, data_array[2]]].to_h
+  def self.from_csv(path_hash)
+    data_hash = {}
+    path_hash.each { |key, path| data_hash[key] = DataLoader.from_CSV(path) }
+    SalesEngine.new(data_hash)
   end
 
   def populate_item_repository(array)
@@ -71,46 +61,58 @@ class SalesEngine
   end
 
   def establish_relationships
-   connect_merchant_to_item
-   connect_invoices_items_and_customers_to_merchants
-   connect_merchants_items_transactions_and_customers_to_invoice
-   connect_invoice_to_transaction
- end
+   establish_item_relationships
+   establish_merchant_relationships
+   establish_invoice_item_relationships
+   establish_invoice_relationships
+   establish_transaction_relationships
+  end
 
- def connect_merchant_to_item
+  def establish_item_relationships
     items.all.each do |item|
       item.merchant = merchants.find_by_id(item.merchant_id)
     end
   end
 
-  def connect_invoices_items_and_customers_to_merchants
+  def establish_merchant_relationships
     merchants.all.each do |merchant|
       merchant.invoices = invoices.find_all_by_merchant_id(merchant.id)
       merchant.items = items.find_all_by_merchant_id(merchant.id).uniq
-      merchant.customers = merchant.invoices.map { |invoice| customers.find_by_id(invoice.customer_id) }.uniq
+      connect_customers_to_merchants(merchant)
     end
   end
 
-  def connect_invoice_to_transaction
-    transactions.all.each do |transaction|
-      transaction.invoice = invoices.find_by_id(transaction.invoice_id)
-    end
-  end
-
-  def connect_items_to_invoice_items
+  def establish_invoice_item_relationships
     invoice_items.all.each do |invoice_item|
       invoice_item.items = items.find_by_id(invoice_item.item_id)
     end
   end
 
-  def connect_merchants_items_transactions_and_customers_to_invoice
-    connect_items_to_invoice_items
+  def establish_invoice_relationships
     invoices.all.each do |invoice|
       invoice.merchant = merchants.find_by_id(invoice.merchant_id)
       invoice.invoice_items = invoice_items.find_all_by_invoice_id(invoice.id).uniq
-      invoice.items = invoice.invoice_items.map { |invoice_item| invoice_item.items }
+      invoice.items = connect_items_to_invoice(invoice)
       invoice.transactions = transactions.find_all_by_invoice_id(invoice.id).uniq
       invoice.customer = customers.find_by_id(invoice.customer_id)
     end
+  end
+
+  def establish_transaction_relationships
+    transactions.all.each do |transaction|
+      transaction.invoice = invoices.find_by_id(transaction.invoice_id)
+    end
+  end
+
+  def connect_items_to_invoice(invoice)
+    invoice.invoice_items.map do |invoice_item|
+      invoice_item.items
+    end
+  end
+
+  def connect_customers_to_merchants(merchant)
+    merchant.customers = merchant.invoices.map do
+      |invoice| customers.find_by_id(invoice.customer_id)
+    end.uniq
   end
 end

@@ -111,7 +111,7 @@ class SalesAnalyst
   def average_items_per_merchant_standard_deviation
     average = average_items_per_merchant
     variance = sales_engine.merchants.all.reduce(0) do |sum, merchant|
-      sum += (merchant.items.length - average) ** 2
+      sum + (merchant.items.length - average) ** 2
     end
     Math.sqrt(variance / (sales_engine.merchants.all.length - 1)).round(2)
   end
@@ -120,7 +120,7 @@ class SalesAnalyst
 
     average = average_invoices_per_merchant
     variance = sales_engine.merchants.all.reduce(0) do |sum, merchant|
-      sum += (merchant.invoices.length - average) ** 2
+      sum + (merchant.invoices.length - average) ** 2
     end
     Math.sqrt(variance / (sales_engine.merchants.all.length - 1)).round(2)
   end
@@ -135,7 +135,7 @@ class SalesAnalyst
   def average_invoices_per_day_standard_deviation
     average = average_invoices_per_day
     variance = total_invoices_per_day.reduce(0) do |sum, day|
-      sum += (day[1] - average) ** 2
+      sum + (day[1] - average) ** 2
     end
     Math.sqrt(variance / (total_invoices_per_day.length - 1)).round(2)
   end

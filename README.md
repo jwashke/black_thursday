@@ -1,5 +1,7 @@
 #Black Thursday
 
+[![Code Climate](https://codeclimate.com/github/jwashke/black_thursday/badges/gpa.svg)](https://codeclimate.com/github/jwashke/black_thursday) [![Build Status](https://travis-ci.org/jwashke/black_thursday.svg?branch=master)](https://travis-ci.org/jwashke/black_thursday) [![Test Coverage](https://codeclimate.com/github/jwashke/black_thursday/badges/coverage.svg)](https://codeclimate.com/github/jwashke/black_thursday/coverage)
+
 Find the [project spec here](https://github.com/turingschool/curriculum/blob/master/source/projects/black_thursday.markdown).
 
 ##Overview
