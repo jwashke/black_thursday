@@ -177,7 +177,12 @@ class SalesAnalyst
   end
 
   def merchants_ranked_by_revenue
-    merchants_revenue_array.sort_by {|earner| earner[:revenue]}.reverse.map { |hash| hash[:merchant] }
+    #require "pry"; binding.pry
+    array = merchants_revenue_array.reject { |hash| hash[:revenue].nil? }
+
+    array.sort_by do |earner|
+      earner[:revenue]#.reverse.map { |hash| hash[:merchant] }
+    end.reverse.map { |hash| hash[:merchant] }
   end
 
   def merchants_with_pending_invoices
@@ -198,7 +203,7 @@ class SalesAnalyst
 
   def revenue_by_merchant(merchant_id)
     merchant_hash = merchants_revenue_array.find { |hash| hash[:merchant].id == merchant_id }
-    merchant_hash[:revenue]
+    merchant_hash[:revenue].nil? ? 0 : merchant_hash[:revenue]
   end
 
   def successful_invoice_items(merchant_id)
@@ -215,6 +220,7 @@ class SalesAnalyst
 
   def best_item_for_merchant(merchant_id)
     invoice_items = successful_invoice_items(merchant_id).sort_by {|invoice_item| invoice_item.unit_price * invoice_item.quantity }
+    return 0 if invoice_items.last.nil?
     sales_engine.items.find_by_id(invoice_items.last.item_id)
   end
 
