@@ -21,7 +21,7 @@ class SalesEngine
               :customers
 
   def initialize(hash)
-    @items         ||= populate_item_repository(hash[:items])
+    @items         = ItemRepository.new(hash[:items])
     @merchants     ||= populate_merchant_repository(hash[:merchants])
     @invoices      ||= populate_invoice_repository(hash[:invoices])
     @invoice_items ||= populate_invoice_item_repository(hash[:invoice_items])
@@ -49,11 +49,15 @@ class SalesEngine
   end
 
   def populate_invoice_item_repository(array)
-    InvoiceItemRepository.new(array.map { |invoice_item| InvoiceItem.new(invoice_item) })
+    InvoiceItemRepository.new(array.map do |invoice_item|
+      InvoiceItem.new(invoice_item)
+    end)
   end
 
   def populate_transaction_repository(array)
-    TransactionRepository.new(array.map { |transaction| Transaction.new(transaction) })
+    TransactionRepository.new(array.map do |transaction|
+      Transaction.new(transaction)
+    end)
   end
 
   def populate_customer_repository(array)
@@ -111,8 +115,8 @@ class SalesEngine
   end
 
   def connect_customers_to_merchants(merchant)
-    merchant.customers = merchant.invoices.map do
-      |invoice| customers.find_by_id(invoice.customer_id)
+    merchant.customers = merchant.invoices.map do |invoice|
+      customers.find_by_id(invoice.customer_id)
     end.uniq
   end
 end
