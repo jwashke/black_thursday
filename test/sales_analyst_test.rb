@@ -93,4 +93,31 @@ class SalesAnalystTest < Minitest::Test
     assert_equal 0, @sa.total_revenue_by_date(Time.parse("2000-05-28")).to_f
   end
 
+  def test_it_returns_top_performing_merchants_by_revenue
+    assert_equal 5, @sa.top_revenue_earners(5).count
+  end
+
+  def test_it_returns_merchants_with_pending_invoices
+    assert_equal 19, @sa.merchants_with_pending_invoices.count
+  end
+
+  def test_it_returns_merchants_that_offer_only_one_item
+    assert_equal 26, @sa.merchants_with_only_one_item.count
+  end
+
+  def test_it_returns_merchants_selling_one_item_month_registered
+    assert_equal 2, @sa.merchants_with_only_one_item_registered_in_month("May").count
+  end
+
+  def test_it_returns_total_revenue_for_single_merchant
+    assert_equal 0, @sa.revenue_by_merchant(12334159)
+  end
+
+  def test_it_returns_most_sold_item_for_merchant
+    assert_equal [], @sa.most_sold_item_for_merchant(12334207)
+  end
+
+  def test_it_returns_best_item_for_merchant
+    assert_equal 0, @sa.best_item_for_merchant(12334207)
+  end
 end
