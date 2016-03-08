@@ -22,4 +22,8 @@ class Customer
   def updated_at
     Time.parse(@info[:updated_at])
   end
+
+  def inspect
+    "#<#{self.class}>"
+  end
 end
