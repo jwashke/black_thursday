@@ -15,6 +15,10 @@ class Merchant
     @info[:name]
   end
 
+  def created_at
+    Time.parse(@info[:created_at])
+  end
+
   def inspect
     "#<#{self.class}>"
   end
