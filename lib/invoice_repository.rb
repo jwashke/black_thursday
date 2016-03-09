@@ -1,7 +1,13 @@
+require_relative 'invoice'
+
 class InvoiceRepository
 
   def initialize(invoices)
-    @invoices = invoices
+    @invoices = populate_invoice_array(invoices)
+  end
+
+  def populate_invoice_array(invoices)
+    invoices.map { |invoice| Invoice.new(invoice) }
   end
 
   def all

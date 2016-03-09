@@ -64,7 +64,7 @@ class InvoiceTest < MiniTest::Test
 
   def test_total_returns_total_price_if_paid_in_full
     @invoice.transactions = @test_helper.success_transaction
-    @invoice.invoice_items = @test_helper.array_of_invoice_items
+    @invoice.invoice_items = @test_helper.array_of_invoice_items_objects
     assert_equal 42.97, @invoice.total.to_f
   end
 end

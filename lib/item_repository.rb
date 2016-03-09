@@ -1,7 +1,9 @@
+require_relative 'item'
+
 class ItemRepository
 
   def initialize(items)
-    @items = populate_items_array
+    @items = populate_items_array(items)
   end
 
   def populate_items_array(items)

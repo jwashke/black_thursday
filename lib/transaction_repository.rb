@@ -1,6 +1,12 @@
+require_relative 'transaction'
+
 class TransactionRepository
   def initialize(transactions)
-    @transactions = transactions
+    @transactions = populate_transactions_array(transactions)
+  end
+
+  def populate_transactions_array(transactions)
+    transactions.map { |transaction| Transaction.new(transaction) }
   end
 
   def all

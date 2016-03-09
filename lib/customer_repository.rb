@@ -1,7 +1,13 @@
+require_relative 'customer'
+
 class CustomerRepository
 
   def initialize(customers)
-    @customers = customers
+    @customers = populate_customers_array(customers)
+  end
+
+  def populate_customers_array(customers)
+    customers.map { |customer| Customer.new(customer) }
   end
 
   def all
