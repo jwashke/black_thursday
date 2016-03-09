@@ -1,13 +1,13 @@
 module InvoiceAnalysis
 
   def average_invoices_per_day
-    sales_engine.invoices.all.count / 7.0
+    average(sales_engine.invoices.all.count, 7.0)
   end
 
   def total_invoices_per_day
     days = Hash.new(0)
-    sales_engine.invoices.all.map do |invoice|
-      days[invoice.created_at.strftime("%A")] += 1 # use %A instead of wday
+    sales_engine.invoices.all.each do |invoice|
+      days[invoice.created_at.strftime("%A")] += 1
     end
     days
   end
@@ -35,7 +35,9 @@ module InvoiceAnalysis
   end
 
   def total_revenue_by_date(date)
-    get_invoices_for_date(date).reduce(0) { |sum, invoice| sum + invoice.total }
+    get_invoices_for_date(date).reduce(0) do |sum, invoice|
+      sum + invoice.total
+    end
   end
 
   def get_invoices_for_date(date)

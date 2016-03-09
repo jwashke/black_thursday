@@ -44,7 +44,7 @@ class SalesEngineTest < Minitest::Test
   end
 
   def test_its_merchant_repository_loaded_all_merchants
-    assert_equal 108, @se.merchants.all.count
+    assert_equal 109, @se.merchants.all.count
   end
 
   def test_its_merchant_instances_are_connected_to_invoices

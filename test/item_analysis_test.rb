@@ -4,8 +4,7 @@ require "minitest/pride"
 require_relative '../lib/sales_engine'
 require_relative '../lib/sales_analyst'
 
-
-class SalesAnalystTest < Minitest::Test
+class ItemAnalysisTest < Minitest::Test
   def setup
     se = SalesEngine.from_csv({
       :items         => "./test/test_data/items.csv",
@@ -18,19 +17,12 @@ class SalesAnalystTest < Minitest::Test
     @sa = SalesAnalyst.new(se)
   end
 
-  def test_it_can_be_instantiated
-    assert @sa.instance_of?(SalesAnalyst)
+  def test_it_returns_golden_items
+    assert_equal 1, @sa.golden_items.count
+    assert_equal Item, @sa.golden_items.first.class
   end
 
-  def test_it_can_find_the_average
-    assert_equal 3.03, @sa.average(100, 33)
-  end
-
-  def test_it_can_find_the_square_root_of_the_quotient
-    assert_equal 2.83, @sa.square_root_of_quotient(25, 3)
-  end
-
-  def test_it_can_find_the_total_price
-    assert_equal 117_201.84, @sa.total_price(@sa.sales_engine.items.all).to_f
+  def test_it_returns_the_item_price_standard_deviation
+    assert_equal 8901.79, @sa.item_price_standard_deviation
   end
 end

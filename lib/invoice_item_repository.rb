@@ -1,6 +1,7 @@
 require_relative 'invoice_item'
 
 class InvoiceItemRepository
+
   def initialize(invoice_items)
     @invoice_items = populate_invoice_item_array(invoice_items)
   end

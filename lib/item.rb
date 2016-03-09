@@ -2,7 +2,9 @@ require 'bigdecimal'
 require 'bigdecimal/util'
 
 class Item
+
   attr_accessor :merchant
+
   def initialize(info_hash)
     @info = info_hash
   end
