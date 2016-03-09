@@ -161,4 +161,16 @@ module MerchantAnalysis
       hash[:revenue]
     end
   end
+
+  def item_names_for_top_merchant
+    sorted_merchants_revenue_array[0].items.map do |item|
+      item.name
+    end
+  end
+
+  def item_prices_for_top_merchant
+    sorted_merchants_revenue_array[0].items.map do |item|
+      item.unit_price
+    end
+  end
 end

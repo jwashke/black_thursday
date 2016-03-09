@@ -7,6 +7,18 @@ module ItemAnalysis
     end
   end
 
+  def golden_items_name_array
+    golden_items.map do |item|
+      item.name
+    end
+  end
+
+  def golden_items_price_array
+    golden_items.map do |item|
+      item.unit_price
+    end
+  end
+
   def item_price_standard_deviation
     total = total_price(sales_engine.items.all)
     average = average(total, sales_engine.items.all.length)

@@ -15,3 +15,9 @@ From a technical perspective, this project will emphasize:
 * Relationships between objects
 * Encapsulating Responsibilities
 * Light data / analytics
+
+##Running the program
+
+To create the graphs, from the main project folder run
+
+    

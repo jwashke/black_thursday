@@ -2,7 +2,7 @@ source 'https://rubygems.org'
 
 gem 'cane'
 gem 'reek'
-gem 'rake'
+gem 'rake', '<11.0'
 gem 'minitest'
 gem "codeclimate-test-reporter", group: :test, require: nil
 gem 'googlecharts'
