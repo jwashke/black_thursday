@@ -2,6 +2,7 @@ require_relative 'sales_engine'
 require_relative 'merchant_analysis'
 require_relative 'item_analysis'
 require_relative 'invoice_analysis'
+require_relative 'charts'
 
 class SalesAnalyst
   include MerchantAnalysis
@@ -12,6 +13,8 @@ class SalesAnalyst
 
   def initialize(sales_engine)
     @sales_engine = sales_engine
+    #Charts.new(self)
+
   end
 
   def average(total, number)

@@ -62,12 +62,17 @@ module MerchantAnalysis
   end
 
   def merchants_ranked_by_revenue
+    sorted_merchants_revenue_array.reverse.map do |hash|
+      hash[:merchant]
+    end
+  end
+
+  def sorted_merchants_revenue_array
     array = merchants_revenue_array.reject { |hash| hash[:revenue].nil? }
     array.sort_by do |hash|
       hash[:revenue]
-    end.reverse.map { |hash| hash[:merchant] }
+    end
   end
-
   def top_revenue_earners(x = 20)
     merchants_ranked_by_revenue[0..(x - 1)]
   end
@@ -143,5 +148,17 @@ module MerchantAnalysis
     merchant = sales_engine.merchants.find_by_id(merchant_id)
     invoices = merchant.invoices.select { |invoice| invoice.is_paid_in_full? }
     (invoices.map { |invoice| invoice.invoice_items }).flatten
+  end
+
+  def merchant_names_sorted_by_revenue
+    sorted_merchants_revenue_array.map do |hash|
+      hash[:merchant].name
+    end
+  end
+
+  def merchants_revenue_hash
+    sorted_merchants_revenue_array.map do |hash|
+      hash[:revenue]
+    end
   end
 end
