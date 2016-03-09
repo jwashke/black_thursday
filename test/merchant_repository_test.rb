@@ -5,8 +5,8 @@ require 'minitest/autorun'
 class MerchantRepositoryTest < Minitest::Test
 	def setup
 		@test_helper = TestHelper.new
-		@merchants = @test_helper.array_of_merchants
-		@merchant_repository = MerchantRepository.new(@merchants)
+		merchants = @test_helper.array_of_merchants
+		@merchant_repository = MerchantRepository.new(merchants)
 	end
 
   def test_it_can_be_instantiated
@@ -14,20 +14,19 @@ class MerchantRepositoryTest < Minitest::Test
 	end
 
 	def test_it_can_return_an_array_of_all_merchants
-    assert_equal @merchants, @merchant_repository.all
+    assert_equal 3, @merchant_repository.all.count
 	end
 
 	def test_it_can_find_merchant_by_id
-    assert_equal @merchants[0], @merchant_repository.find_by_id(11111111)
+    assert_equal 11111111, @merchant_repository.find_by_id(11111111).id
 	end
 
 	def test_it_can_find_merchant_by_name
-		assert_equal @merchants[0], @merchant_repository.find_by_name("Virginia Hams")
+		assert_equal "Virginia Hams", @merchant_repository.find_by_name("Virginia Hams").name
 	end
 
 	def test_it_can_find_all_by_name
-		merchants = [@merchants[0], @merchants[2]]
-		assert_equal merchants, @merchant_repository.find_all_by_name("Hams")
+		assert_equal 2, @merchant_repository.find_all_by_name("Hams").count
 	end
 
 	def test_it_returns_empty_array_when_no_merchant

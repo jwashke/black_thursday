@@ -1,7 +1,13 @@
+require_relative 'merchant'
+
 class MerchantRepository
 
   def initialize(merchants)
-    @merchants = merchants
+    @merchants = populate_merchants_array(merchants)
+  end
+
+  def populate_merchants_array(merchants)
+    merchants.map { |merchant| Merchant.new(merchant) }
   end
 
   def all

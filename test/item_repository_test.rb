@@ -5,8 +5,8 @@ require 'minitest/autorun'
 class ItemRepositoryTest < MiniTest::Test
   def setup
     @test_helper = TestHelper.new
-    @items = @test_helper.array_of_items
-    @item_repository = ItemRepository.new(@items)
+    items = @test_helper.array_of_items
+    @item_repository = ItemRepository.new(items)
   end
 
   def test_it_can_be_instantiated
@@ -14,40 +14,35 @@ class ItemRepositoryTest < MiniTest::Test
   end
 
   def test_it_can_return_an_array_of_all_items
-    assert_equal @items, @item_repository.all
+    assert_equal 3, @item_repository.all.count
 	end
 
 	def test_it_can_find_item_by_id
-    assert_equal @items[0], @item_repository.find_by_id(263395237)
+    assert_equal 263395237, @item_repository.find_by_id(263395237).id
 	end
 
 	def test_it_can_find_item_by_name
-		assert_equal @items[0], @item_repository.find_by_name("Country Ham")
+		assert_equal "Country Ham", @item_repository.find_by_name("Country Ham").name
 	end
 
   def test_it_can_find_all_by_description
-    items = [@items[0], @items[2]]
-    assert_equal items, @item_repository.find_all_with_description("Delicious")
+    assert_equal 2, @item_repository.find_all_with_description("Delicious").count
   end
 
   def test_find_all_by_description_is_case_insensitive
-    items = [@items[0], @items[2]]
-    assert_equal items, @item_repository.find_all_with_description("DeLiCIOUS")
+    assert_equal 2, @item_repository.find_all_with_description("DeLiCIOUS").count
   end
 
   def test_it_can_find_all_by_price
-    items = [@items[0]]
-    assert_equal items, @item_repository.find_all_by_price(10.99)
+    assert_equal 1, @item_repository.find_all_by_price(10.99).count
   end
 
   def test_it_can_find_all_by_price_in_range
-		items = [@items[0], @items[2]]
-		assert_equal items, @item_repository.find_all_by_price_in_range(10.99..15.99)
+		assert_equal 2, @item_repository.find_all_by_price_in_range(10.99..15.99).count
 	end
 
   def test_it_can_find_all_by_merchant_id
-		items = [@items[1]]
-		assert_equal items, @item_repository.find_all_by_merchant_id(55555555)
+		assert_equal 1, @item_repository.find_all_by_merchant_id(55555555).count
 	end
 
 	def test_it_returns_empty_array_when_no_item

@@ -1,7 +1,13 @@
+require_relative 'item'
+
 class ItemRepository
 
   def initialize(items)
-    @items = items
+    @items = populate_items_array(items)
+  end
+
+  def populate_items_array(items)
+    items.map { |item| Item.new(item) }
   end
 
   def all
@@ -36,4 +42,3 @@ class ItemRepository
     "#<#{self.class} #{@items.size} rows>"
   end
 end
-

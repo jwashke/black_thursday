@@ -5,8 +5,8 @@ require 'minitest/autorun'
 class CustomerRepositoryTest < MiniTest::Test
   def setup
     @test_helper = TestHelper.new
-    @customers = @test_helper.array_of_customers
-    @customer_repository = CustomerRepository.new(@customers)
+    customers = @test_helper.array_of_customers
+    @customer_repository = CustomerRepository.new(customers)
   end
 
   def test_it_can_be_instantiated
@@ -14,19 +14,19 @@ class CustomerRepositoryTest < MiniTest::Test
   end
 
   def test_it_can_return_an_array_of_all_customers
-    assert_equal @customers, @customer_repository.all
+    assert_equal 3, @customer_repository.all.count
 	end
 
 	def test_it_can_find_customer_by_id
-    assert_equal @customers[0], @customer_repository.find_by_id(5)
+    assert_equal 5, @customer_repository.find_by_id(5).id
 	end
 
   def test_it_can_find_all_by_first_name
-    assert_equal [@customers[1]], @customer_repository.find_all_by_first_name("Mariah")
+    assert_equal "Mariah", @customer_repository.find_all_by_first_name("Mariah").first.first_name
   end
 
   def test_it_can_find_all_by_last_name
-    assert_equal [@customers[1]], @customer_repository.find_all_by_last_name("Toy")
+    assert_equal "Toy", @customer_repository.find_all_by_last_name("Toy").first.last_name
   end
 
   def test_it_returns_empty_array_when_no_customer
