@@ -15,3 +15,17 @@ From a technical perspective, this project will emphasize:
 * Relationships between objects
 * Encapsulating Responsibilities
 * Light data / analytics
+
+##Running the program
+
+To create the graphs, from the main project folder run
+
+    ruby lib/charts.rb
+
+This will create 3 html files in the graph folder each containing a graph.
+
+To run the project against the spec harness, clone the spec harness into a directory in the same parent directory as this project. Then follow the instructions on the spec harness readme [here](https://github.com/turingschool/black_thursday_spec_harness).
+
+to run the project tests run
+
+    rake test

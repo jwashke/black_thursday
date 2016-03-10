@@ -49,4 +49,8 @@ class InvoiceItemTest < MiniTest::Test
   def test_it_returns_a_time_instance_for_time_updated
     assert_equal Time.parse("2012-03-28 14:54:09 UTC"), @invoice_item.updated_at
   end
+
+  def test_inspect_was_monkey_patched
+    assert_equal "#<#{InvoiceItem}>", @invoice_item.inspect
+  end
 end

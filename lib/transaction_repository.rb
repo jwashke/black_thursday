@@ -1,6 +1,7 @@
 require_relative 'transaction'
 
 class TransactionRepository
+
   def initialize(transactions)
     @transactions = populate_transactions_array(transactions)
   end

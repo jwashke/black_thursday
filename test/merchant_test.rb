@@ -21,4 +21,8 @@ class MerchantTest < Minitest::Test
   def test_it_can_return_its_name
     assert_equal "Turing School", @merchant.name
   end
+
+  def test_inspect_was_monkey_patched
+    assert_equal "#<#{Merchant}>", @merchant.inspect
+  end
 end

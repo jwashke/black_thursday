@@ -19,6 +19,7 @@ GEM
       thread_safe (~> 0.3, >= 0.3.1)
     docile (1.1.5)
     equalizer (0.0.11)
+    googlecharts (1.6.12)
     ice_nine (0.11.2)
     json (1.8.3)
     method_source (0.8.2)
@@ -55,9 +56,10 @@ PLATFORMS
 DEPENDENCIES
   cane
   codeclimate-test-reporter
+  googlecharts
   minitest
   pry
-  rake
+  rake (< 11.0)
   reek
   simplecov
 

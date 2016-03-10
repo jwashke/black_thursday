@@ -1,4 +1,5 @@
 class Invoice
+
   attr_accessor :merchant,
                 :items,
                 :customer,

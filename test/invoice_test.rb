@@ -67,4 +67,8 @@ class InvoiceTest < MiniTest::Test
     @invoice.invoice_items = @test_helper.array_of_invoice_items_objects
     assert_equal 42.97, @invoice.total.to_f
   end
+
+  def test_inspect_was_monkey_patched
+    assert_equal "#<#{Invoice}>", @invoice.inspect
+  end
 end

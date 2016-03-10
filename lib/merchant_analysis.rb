@@ -1,31 +1,25 @@
 module MerchantAnalysis
 
   def average_items_per_merchant
-    merchant_array = sales_engine.merchants.all
-    average_per_merchant(merchant_array, :items)
-  end
-
-  def average_invoices_per_merchant
-    merchant_array = sales_engine.merchants.all
-    average_per_merchant(merchant_array, :invoices)
-  end
-
-  def average_per_merchant(array, argument_to_send)
-    total = array.reduce(0) do |sum, element|
-      sum + element.send(argument_to_send).length
+    total_items = sales_engine.merchants.all.reduce(0) do |sum, merchant|
+      sum + merchant.items.length
     end
-    average(total, array.length)
+    average(total_items, sales_engine.merchants.all.length)
   end
 
-  def average(total, number)
-    (total / number.to_f).round(2)
+  def average_items_per_merchant_standard_deviation
+    average = average_items_per_merchant
+    variance = sales_engine.merchants.all.reduce(0) do |sum, merchant|
+      sum + (merchant.items.length - average) ** 2
+    end
+    square_root_of_quotient(variance, sales_engine.merchants.all.length - 1)
   end
 
   def average_item_price_for_merchant(merchant_id)
     merchant = sales_engine.merchants.find_by_id(merchant_id)
     total = total_price(merchant.items)
     items = merchant.items.length
-    BigDecimal.new(average(total, items))
+    average(total, items)
   end
 
   def merchants_with_high_item_count
@@ -36,19 +30,19 @@ module MerchantAnalysis
     end
   end
 
-  def total_price(items)
-    items.reduce(0) do |sum_items, item|
-      sum_items + item.unit_price
+  def average_invoices_per_merchant
+    total_invoices = sales_engine.merchants.all.reduce(0) do |sum, merchant|
+      sum + merchant.invoices.length
     end
+    average(total_invoices, sales_engine.merchants.all.length)
   end
 
-  def average_average_price_per_merchant
-    total_average = sales_engine.merchants.all.reduce(0) do |sum, merchant|
-      items_price = total_price(merchant.items)
-      items_price == 0 ? sum : sum + (items_price /merchant.items.length)
+  def average_invoices_per_merchant_standard_deviation
+    average = average_invoices_per_merchant
+    variance = sales_engine.merchants.all.reduce(0) do |sum, merchant|
+      sum + (merchant.invoices.length - average) ** 2
     end
-    average = (total_average / sales_engine.merchants.all.length).round(2)
-    BigDecimal.new("#{average}")
+    square_root_of_quotient(variance, sales_engine.merchants.all.length - 1)
   end
 
   def top_merchants_by_invoice_count
@@ -67,43 +61,20 @@ module MerchantAnalysis
     end
   end
 
-  def average_items_per_merchant_standard_deviation
-    average = average_items_per_merchant
-    variance = sales_engine.merchants.all.reduce(0) do |sum, merchant|
-      sum + (merchant.items.length - average) ** 2
-    end
-    Math.sqrt(variance / (sales_engine.merchants.all.length - 1)).round(2)
-  end
-
-  def average_invoices_per_merchant_standard_deviation
-    average = average_invoices_per_merchant
-    variance = sales_engine.merchants.all.reduce(0) do |sum, merchant|
-      sum + (merchant.invoices.length - average) ** 2
-    end
-    Math.sqrt(variance / (sales_engine.merchants.all.length - 1)).round(2)
-  end
-
-  def average_invoices_per_merchant
-    number_of_invoices = sales_engine.merchants.all.reduce(0) do |sum, merchant|
-      sum + merchant.invoices.length
-    end
-    (number_of_invoices / sales_engine.merchants.all.length.to_f).round(2)
-  end
-
-  def merchants_revenue_array
-    sales_engine.merchants.all.map do |merchant|
-      revenue = merchant.invoices.map {|invoice| invoice.total }.reduce(:+)
-      { :merchant => merchant, :revenue => revenue}
-    end
-  end
-
   def merchants_ranked_by_revenue
-    #require "pry"; binding.pry
-    array = merchants_revenue_array.reject { |hash| hash[:revenue].nil? }
+    sorted_merchants_revenue_array.reverse.map do |hash|
+      hash[:merchant]
+    end
+  end
 
-    array.sort_by do |earner|
-      earner[:revenue]#.reverse.map { |hash| hash[:merchant] }
-    end.reverse.map { |hash| hash[:merchant] }
+  def sorted_merchants_revenue_array
+    array = merchants_revenue_array.reject { |hash| hash[:revenue].nil? }
+    array.sort_by do |hash|
+      hash[:revenue]
+    end
+  end
+  def top_revenue_earners(x = 20)
+    merchants_ranked_by_revenue[0..(x - 1)]
   end
 
   def merchants_with_pending_invoices
@@ -122,13 +93,6 @@ module MerchantAnalysis
     merchants_with_only_one_item.select do |merchant|
       merchant.created_at.month == Time.parse(month).month
     end
-  end
-
-  def revenue_by_merchant(merchant_id)
-    merchant_hash = merchants_revenue_array.find do |hash|
-      hash[:merchant].id == merchant_id
-    end
-    merchant_hash[:revenue].nil? ? 0 : merchant_hash[:revenue]
   end
 
   def best_item_for_merchant(merchant_id)
@@ -151,13 +115,62 @@ module MerchantAnalysis
     end
   end
 
-  def top_revenue_earners(x = 20)
-    merchants_ranked_by_revenue[0..(x - 1)]
+  def average_average_price_per_merchant
+    total_average = sales_engine.merchants.all.reduce(0) do |sum, merchant|
+      items_price = total_price(merchant.items)
+      items_price == 0 ? sum : sum + average(items_price, merchant.items.length)
+    end
+    average(total_average, sales_engine.merchants.all.length)
+  end
+
+  def average_invoices_per_merchant
+    number_of_invoices = sales_engine.merchants.all.reduce(0) do |sum, merchant|
+      sum + merchant.invoices.length
+    end
+    (number_of_invoices / sales_engine.merchants.all.length.to_f).round(2)
+  end
+
+  def merchants_revenue_array
+    sales_engine.merchants.all.map do |merchant|
+      revenue = merchant.invoices.map {|invoice| invoice.total }.reduce(:+)
+      { :merchant => merchant, :revenue => revenue}
+    end
+  end
+
+  def revenue_by_merchant(merchant_id)
+    merchant_hash = merchants_revenue_array.find do |hash|
+      hash[:merchant].id == merchant_id
+    end
+    merchant_hash[:revenue].nil? ? 0 : merchant_hash[:revenue]
   end
 
   def successful_items(merchant_id)
     merchant = sales_engine.merchants.find_by_id(merchant_id)
     invoices = merchant.invoices.select { |invoice| invoice.is_paid_in_full? }
     (invoices.map { |invoice| invoice.invoice_items }).flatten
+  end
+
+  def names_sorted_by_revenue
+    sorted_merchants_revenue_array.map do |hash|
+      hash[:merchant].name
+    end
+  end
+
+  def merchants_revenue_hash
+    sorted_merchants_revenue_array.map do |hash|
+      hash[:revenue]
+    end
+  end
+
+  def item_names_for_top_merchant
+    sorted_merchants_revenue_array[0].items.map do |item|
+      item.name
+    end
+  end
+
+  def item_prices_for_top_merchant
+    sorted_merchants_revenue_array[0].items.map do |item|
+      item.unit_price
+    end
   end
 end

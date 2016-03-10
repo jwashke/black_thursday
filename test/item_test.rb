@@ -48,4 +48,8 @@ class ItemTest < Minitest::Test
   def test_it_returns_the_time_last_updated
     assert_equal @time.to_s, @item.updated_at.to_s
   end
+
+  def test_inspect_was_monkey_patched
+    assert_equal "#<#{Item}>", @item.inspect
+  end
 end

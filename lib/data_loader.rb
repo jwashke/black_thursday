@@ -1,6 +1,7 @@
 require 'csv'
 
 class DataLoader
+
   def self.from_CSV(filename)
     contents = CSV.open(filename, headers: true, header_converters: :symbol)
     parse_data_to_hash(contents)
