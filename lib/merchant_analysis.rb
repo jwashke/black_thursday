@@ -150,7 +150,7 @@ module MerchantAnalysis
     (invoices.map { |invoice| invoice.invoice_items }).flatten
   end
 
-  def merchant_names_sorted_by_revenue
+  def names_sorted_by_revenue
     sorted_merchants_revenue_array.map do |hash|
       hash[:merchant].name
     end

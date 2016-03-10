@@ -19,7 +19,7 @@ class Charts
     graph = Gchart.pie_3d(:title  => 'Top 20 Merchants by Revenue',
                           :size   => '600x300',
                           :data   => @sa.merchants_revenue_hash[0..19],
-                          :labels => @sa.merchant_names_sorted_by_revenue[0..19],
+                          :labels => @sa.names_sorted_by_revenue[0..19],
                           :format => 'image_tag')
     write_graph_to_file(graph, "./graphs/top_5_merchants_by_revenue.html")
   end
